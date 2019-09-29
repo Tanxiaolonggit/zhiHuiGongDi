@@ -4,23 +4,23 @@
       <div class="logo">LOGO</div>
       <!-- 路由 -->
       <div class="router">
-        <router-link class="routerLink" to='project' >
+        <router-link class="routerLink" to='/project' >
           <a-icon type="pie-chart" />
           <p>项目</p>
         </router-link>
-        <router-link class="routerLink" to='scene' >
+        <router-link class="routerLink" to='/scene' >
           <a-icon type="desktop" />
           <p>现场</p>
         </router-link>
-        <router-link class="routerLink" to='maps' >
+        <router-link class="routerLink" to='/maps' >
           <a-icon type="global" />
           <p>地图</p>
         </router-link>
-        <router-link class="routerLink" to='application' >
+        <router-link class="routerLink" to='/application' >
           <a-icon type="appstore" />
           <p>应用</p>
         </router-link>
-        <router-link class="routerLink" to='userData' >
+        <router-link class="routerLink" to='/userData' >
           <a-icon type="user" />
           <p>用户</p>
         </router-link>
@@ -35,9 +35,9 @@ export default {
 <style lang="less" scoped>
 .nav{
   display: flex;
+  background: #26abe2;
   height: 8%;
   justify-content: space-between;
-  background: transparent;
   .logo{
       height: 100%;
       width: 200px;

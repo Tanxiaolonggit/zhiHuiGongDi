@@ -9,10 +9,17 @@ export default new Router({
       path: "/",
       redirect:'/project'
     },
+    // 项目主页
     {
       path: "/project",
       name: "project",
-      component: resolve => require(['./views/navBar/project.vue'], resolve)
+      component: resolve => require(['./views/navBar/project.vue'], resolve),
+    },
+    // 项目详情
+    {
+      path: "/project/projectsDetail/:projectId",
+      name: "projectsDtail",
+      component: resolve => require(['./views/projects/projectsDetail.vue'], resolve)
     },
     {
       path: "/scene",

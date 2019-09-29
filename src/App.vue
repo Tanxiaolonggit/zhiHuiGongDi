@@ -9,7 +9,7 @@ import layout from './views/layout.vue'
 export default {
   components:{
     layout
-  }
+  },
 }
 </script>
 <style lang="less">
@@ -20,7 +20,7 @@ html,body{
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #fff;
+  // color: #fff;
   height: 100%;
 }
 html,body,div,p,span,ul,li,a{
@@ -28,7 +28,7 @@ html,body,div,p,span,ul,li,a{
   padding: 0;
 }
 body{
-  background: url('./assets/image/body/body_bac.jpg');
-  background-size:100% 100%;
+  // background: url('./assets/image/body/body_bac.jpg');
+  // background-size:100% 100%;
 }
 </style>
