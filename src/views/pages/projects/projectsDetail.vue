@@ -24,8 +24,8 @@
     </div>
 </template>
 <script>
-import basicMsg from '../../components/projects/pages/basicMsg'
-import personList from '../../components/projects/pages/personList'
+import basicMsg from '../../../components/projects/pages/basicMsg'
+import personList from '../../../components/projects/pages/personList'
 export default {
     name:'project',
     components:{
