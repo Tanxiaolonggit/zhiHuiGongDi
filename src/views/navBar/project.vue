@@ -47,7 +47,7 @@ export default {
                     click:()=>{
                         // console.log(record, index)
                         //跳转到项目详情
-                        this.$router.push({path:'/project/projectsDetail/'+record.projectId})
+                        this.$router.push({path:'/webContent/project/projectsDetail/'+record.projectId})
                     }
                 }
             }
@@ -74,6 +74,7 @@ export default {
     .projects{
         flex: 1;
         width: 100%;
+        height: 92%;
         padding: 20px;
         box-sizing: border-box;
         // 分页器

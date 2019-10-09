@@ -1,6 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
-// import { Toast } from 'vant';
+import { message } from 'ant-design-vue';
 import store from '../store'
 axios.create({
   timeout: 5000,
@@ -25,6 +25,9 @@ axios.interceptors.response.use(
     switch (parseInt(res.data.code)) {
       case 0:
         result=res.data
+        break;
+      case 1:
+        message.error('服务器开小差啦')
         break;
     }
     //在这里对返回的数据进行处理

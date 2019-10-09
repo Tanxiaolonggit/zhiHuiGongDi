@@ -7,6 +7,34 @@ function formatDate(now) {
     let second=now.getSeconds(); //返回日期中的秒数（0到59）
     return year+"-"+month+"-"+date
 }
+function timestampToTime() {
+  var date = new Date();//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  var Y = date.getFullYear() + '-';
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+  var D = date.getDate() + ' ';
+  var h = date.getHours() + ':';
+  var m = date.getMinutes() + ':';
+  var s = date.getSeconds();
+  return Y + M + D + h + m + s;
+}
+function throttle(fn, gapTime) {
+    if (gapTime == null || gapTime == undefined) {
+      gapTime = 1500
+    }
+  
+    let _lastTime = null
+  
+    // 返回新的函数
+    return function () {
+      let _nowTime = + new Date()
+      if (_nowTime - _lastTime > gapTime || !_lastTime) {
+        fn.apply(this, arguments)   //将this和参数传给原函数
+        _lastTime = _nowTime
+      }
+    }
+  }
 export{
-    formatDate
+    formatDate,
+    throttle,
+    timestampToTime
 }

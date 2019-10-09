@@ -4,23 +4,23 @@
       <div class="logo">LOGO</div>
       <!-- 路由 -->
       <div class="router">
-        <router-link class="routerLink" to='/project' >
+        <router-link class="routerLink" to='/webContent/project' >
           <a-icon type="pie-chart" />
           <p>项目</p>
         </router-link>
-        <router-link class="routerLink" to='/scene' >
+        <router-link class="routerLink" to='/webContent/scene' >
           <a-icon type="desktop" />
           <p>现场</p>
         </router-link>
-        <router-link class="routerLink" to='/maps' >
+        <router-link class="routerLink" to='/webContent/maps' >
           <a-icon type="global" />
           <p>地图</p>
         </router-link>
-        <router-link class="routerLink" to='/application' >
+        <router-link class="routerLink" to='/webContent/application' >
           <a-icon type="appstore" />
           <p>应用</p>
         </router-link>
-        <router-link class="routerLink" to='/userData' >
+        <router-link class="routerLink" to='/webContent/userData' >
           <a-icon type="user" />
           <p>用户</p>
         </router-link>
@@ -29,7 +29,17 @@
 </template>
 <script>
 export default {
-    name:'layout'
+    name:'layout',
+    data(){
+      return{
+      }
+    },
+    created(){
+
+    },
+    methods:{
+
+    }
 }
 </script>
 <style lang="less" scoped>
