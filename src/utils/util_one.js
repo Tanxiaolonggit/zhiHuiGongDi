@@ -32,9 +32,18 @@ function throttle(fn, gapTime) {
         _lastTime = _nowTime
       }
     }
+}
+// 判断用户是否登陆
+function isLogin(){
+  if(sessionStorage.getItem('userData')){
+    return true
+  }else{
+    return false
   }
+}
 export{
     formatDate,
     throttle,
-    timestampToTime
+    timestampToTime,
+    isLogin
 }

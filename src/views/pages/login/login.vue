@@ -19,7 +19,7 @@
     </div>
 </template>
 <script>
-import {throttle,timestampToTime} from '../../../utils/util_one'
+import {throttle,timestampToTime,isLogin} from '../../../utils/util_one'
 export default {
     name:'login',
     data(){
@@ -27,6 +27,12 @@ export default {
         userName:'',
         userPsw:''
       }
+    },
+    created(){
+        // 如果已经登陆 直接跳转到项目页
+        if(isLogin()){
+            this.$router.replace({path:'/webContent'})
+        }
     },
     methods:{
         // 登陆
@@ -44,7 +50,12 @@ export default {
                     userPsw:this.userPsw,
                     loginTime:timestampToTime()
                 }).then((res)=>{
-                    console.log(res)
+                    // 存储用户信息
+                    sessionStorage.setItem('userData',JSON.stringify(res.detail))
+                    // 跳转到项目列表
+                    if(res.code===0){
+                        this.$router.replace({path:'/webContent'})
+                    }
                 })
             }
         },1000),
