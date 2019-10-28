@@ -5,7 +5,7 @@ function formatDate(now) {
     let hour=now.getHours();     //返回日期中的小时数（0到23）
     let minute=now.getMinutes(); //返回日期中的分钟数（0到59）
     let second=now.getSeconds(); //返回日期中的秒数（0到59）
-    return year+"-"+month+"-"+date
+    return year+"-"+month+"-"+date + ""
 }
 function timestampToTime() {
   var date = new Date();//时间戳为10位需*1000，时间戳为13位的话不需乘1000
@@ -16,6 +16,29 @@ function timestampToTime() {
   var m = date.getMinutes() + ':';
   var s = date.getSeconds();
   return Y + M + D + h + m + s;
+}
+// 发送给后台的时间戳格式
+var serverTimestamp = function (now) {
+  var d = new Date(now)
+  var year = d.getFullYear();
+  var month = d.getMonth() + 1;
+  var date = d.getDate();
+  let hours = d.getHours();
+  let minute = d.getMinutes();
+  if (month < 10) {
+    month = '0' + month
+  }
+  if (date < 10) {
+    date = '0' + date
+  }
+  if (hours < 10) {
+    hours = '0' + hours
+  }
+  if (minute < 10) {
+    minute = '0' + minute
+  }
+  // return year + "-" + month + "-" + date + ' ' + hours + ":" + minute;
+  return year + "-" + month + "-" + date 
 }
 function throttle(fn, gapTime) {
     if (gapTime == null || gapTime == undefined) {
@@ -45,5 +68,6 @@ export{
     formatDate,
     throttle,
     timestampToTime,
-    isLogin
+    isLogin,
+    serverTimestamp
 }

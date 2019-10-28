@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <div class="login_other">
-            <router-link class="routerLink" to='/notice'>通知公告</router-link><router-link class="routerLink" to='/loadDistrict'>下载专区</router-link>
+            <router-link class="routerLink" to='/noticeSearch'>通知公告</router-link>
         </div>
         <div class="login_input">
             <div class="title">重庆市智慧工地综合信息管理平台</div>

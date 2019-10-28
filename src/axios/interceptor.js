@@ -11,18 +11,19 @@ axios.create({
 axios.interceptors.request.use(config => {
     let user=null; 
     // 如果用户已经登陆 获取携带token
-    if(sessionStorage.getItem('userData')){
+    if(sessionStorage.getItem('userData') && config.url!='/t_dz_user/userLogin'){
       user=JSON.parse(sessionStorage.getItem('userData'))
+      config.data['userToken']=user.userToken
     }
     config.method === 'post'
         ? config.data = qs.stringify({
           ...config.data,
           ...store.state.parameter,
-          token:user?user.userToken:''})
+          })
         : config.params = {
           ...config.params,
           ...store.state.parameter,
-          token:user?user.userToken:''};
+        };
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     return config;
 }, error => {  //请求错误处理
@@ -39,10 +40,14 @@ axios.interceptors.response.use(
       case 1:
         message.error('服务器开小差啦')
         break;
-      case (101):
+      case 101:
        message.error(res.data.msg)
        break;
+      case 101:
+        message.warning('暂无数据')
+        break;
       case (102||103||104||105):
+        // 重新登陆
       break;
     }
     //在这里对返回的数据进行处理

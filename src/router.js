@@ -17,16 +17,16 @@ export default new Router({
     },
     // 通知公告页
     {
-      path: "/notice",
+      path: "/noticeSearch",
       name: "notice",
-      component: resolve => require(['./views/pages/notice/notice.vue'], resolve)
+      component: resolve => require(['./views/pages/noticeSearch/noticeSearch.vue'], resolve)
     },
     // 下载专区页
-    {
-      path: "/loadDistrict",
-      name: "loadDistrict",
-      component: resolve => require(['./views/pages/loadDistrict/loadDistrict.vue'], resolve)
-    },
+    // {
+    //   path: "/loadDistrict",
+    //   name: "loadDistrict",
+    //   component: resolve => require(['./views/pages/loadDistrict/loadDistrict.vue'], resolve)
+    // },
     //项目主页
     {
       path: "/webContent",

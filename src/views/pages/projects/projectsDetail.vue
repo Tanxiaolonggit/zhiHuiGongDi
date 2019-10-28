@@ -1,110 +1,113 @@
 <template>
     <div class='projects'>
-        <a-breadcrumb class="crumbs">
-            <a-breadcrumb-item>项目</a-breadcrumb-item>
-            <a-breadcrumb-item>{{projctName}}</a-breadcrumb-item>
-        </a-breadcrumb>
-        <a-layout class="layOut">
+        <div class="crumbs">
+            <span @click="toProjectList">项目  </span>
+            <span> / {{projctName}}</span>
+        </div>
+        <a-layout v-if='funList' class="layOut">
+            <!-- 左侧功能列表 -->
             <a-layout-sider class="layOut_left" width="256" style="background: #fff;flex:1;">
                 <a-menu
                     style="width:100%;"
-                    :defaultSelectedKeys="[0]"
+                    :defaultSelectedKeys="['projectInfo']"
                     mode="inline"
                 >
-                    <a-menu-item :key="index" v-for='(item,index) in funData' @click="toggleTab(index)">
-                        <span >{{item.name}}</span>
+                    <a-menu-item key='projectInfo' v-if="funList.projectInfo==1" @click="toggleTab(0)">
+                        <span >项目简介</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.video==1" @click="toggleTab(1)">
+                        <span >监控管理</span>
+                    </a-menu-item> 
+                    <a-sub-menu >
+                        <span slot="title"><span>员工管理</span></span>
+                        <a-menu-item key="3" v-if="funList.person.person==1" @click="toggleTab(2)">实名制信息</a-menu-item>
+                        <a-menu-item key="4" v-if="funList.person.sign==1" @click="toggleTab(3)">考勤管理</a-menu-item>
+                    </a-sub-menu>
+                    <a-menu-item v-if="funList.salary==1" @click="toggleTab(4)">
+                        <span >薪资管理</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.device==1" @click="toggleTab(5)">
+                        <span >设备管理</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.environment==1" @click="toggleTab(6)">
+                        <span >环境监测</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.dangerProject==1" @click="toggleTab(7)">
+                        <span >危大工程</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.hiddenDanger==1" @click="toggleTab(8)">
+                        <span >隐患检排</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.inspection==1" @click="toggleTab(9)">
+                        <span >检验检测</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.supervisionReport==1" @click="toggleTab(10)">
+                        <span >监理报告</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.warn==1" @click="toggleTab(11)">
+                        <span >预警信息</span>
+                    </a-menu-item> 
+                     <a-menu-item v-if="funList.material==1" @click="toggleTab(12)">
+                        <span >建材管理</span>
+                    </a-menu-item> 
+                     <a-menu-item v-if="funList.qualityAccept==1" @click="toggleTab(13)">
+                        <span >质量验收</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.examine==1" @click="toggleTab(14)">
+                        <span >巡检信息</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.statistics==1" @click="toggleTab(15)">
+                        <span >统计分析</span>
+                    </a-menu-item> 
+                    <a-menu-item v-if="funList.seniorFun==1" @click="toggleTab(16)">
+                        <span >特色功能</span>
                     </a-menu-item> 
                 </a-menu>
+                
             </a-layout-sider>
+            <!-- 右侧功能详情 -->
             <div class="project_content">
                 <basicMsg @listenProjectName='listenProjectName' v-if="selectTab==0"></basicMsg>
-                <personList v-else-if="selectTab==1"></personList>    
+                <videoSurveillance v-else-if="selectTab==1"></videoSurveillance>
+                <personList v-else-if="selectTab==2"></personList>  
+                <sign v-else-if="selectTab==3"></sign>    
+                <salary v-else-if="selectTab==4"></salary>             
+                <dangerProject v-else-if="selectTab==7"></dangerProject>
+                <warns v-else-if="selectTab==11"></warns>
             </div>
         </a-layout>
     </div>
 </template>
 <script>
+// 基本信息
 import basicMsg from '../../../components/projects/pages/basicMsg'
+// 人员列表
 import personList from '../../../components/projects/pages/personList'
+// 薪资管理
+import salary from '../../../components/projects/pages/salary'
+// 视频监控
+import videoSurveillance from '../../../components/projects/pages/videoSurveillance'
+// 出勤管理
+import sign from '../../../components/projects/pages/sign'
+// 危大工程
+import dangerProject from '../../../components/projects/pages/dangerProject'
+// 预警信息
+import warns from '../../../components/projects/pages/warns'
 export default {
     name:'project',
     components:{
-        basicMsg,personList
+        basicMsg,personList,salary,videoSurveillance,sign,
+        dangerProject,
+        warns,
     },
     data(){
         return{
             projctName:'',
             projectId:this.$route.params.projectId,
-            // 左侧列表
-            funData:[
-                {
-                    name:'项目简介',
-                    isShow:false
-                },
-                {
-                    name:'员工信息',
-                    isShow:false
-                },
-                {
-                    name:'监控管理',
-                    isShow:false
-                },
-                {
-                    name:'考勤管理',
-                    isShow:false
-                },
-                {
-                    name:'薪资管理',
-                    isShow:false
-                },
-                {
-                    name:'设备管理',
-                    isShow:false
-                },
-                {
-                    name:'环境监测',
-                    isShow:false
-                },
-                {
-                    name:'危大工程',
-                    isShow:false
-                },
-                {
-                    name:'隐患检排',
-                    isShow:false
-                },
-                {
-                    name:'检验检测',
-                    isShow:false
-                },
-                {
-                    name:'监理报告',
-                    isShow:false
-                },
-                {
-                    name:'预警信息',
-                    isShow:false
-                },
-                {
-                    name:'建材管理',
-                    isShow:false
-                },
-                {
-                    name:'质量验收',
-                    isShow:false
-                },
-                {
-                    name:'统计分析',
-                    isShow:false
-                },
-                {
-                    name:'特色功能',
-                    isShow:false
-                },
-            ],
-            funList:{},
+            // 左侧功能列表
+            funList:null,
             // 侧边栏当前选中项
-            selectTab:0
+            selectTab:0,
         }
     },
     mounted(){
@@ -123,48 +126,12 @@ export default {
             this.$axios.post('/t_dz_projectfun/selectProjectfun',{
                 projectId:this.projectId
             }).then((res)=>{
-                this.funListHideShow(res.data[0])
+                this.funList=res.data[0]
             })
         },
-        // 控制功能显示隐藏
-        funListHideShow(listData){
-            this.funData.forEach((item,index)=>{
-                switch(index){
-                    case 0:
-                        item.isShow=listData.projectInfo==1?true:false;
-                    case 1:
-                        item.isShow=listData.personInfo==1?true:false;
-                    case 2:
-                        item.isShow=listData.monitor==1?true:false;
-                    case 3:
-                        item.isShow=listData.attendance==1?true:false;
-                    case 4:
-                        item.isShow=listData.salary==1?true:false;
-                    case 5:
-                        item.isShow=listData.device==1?true:false;
-                    case 6:
-                        item.isShow=listData.environment==1?true:false;
-                    case 7:
-                        item.isShow=listData.dangerProject==1?true:false;
-                    case 8:
-                        item.isShow=listData.hiddenDanger==1?true:false;
-                    case 9:
-                        item.isShow=listData.inspection==1?true:false;
-                    case 10:
-                        item.isShow=listData.supervisionReport==1?true:false;
-                    case 11:
-                        item.isShow=listData.warn==1?true:false;
-                    case 12:
-                        item.isShow=listData.material==1?true:false;
-                    case 13:
-                        item.isShow=listData.qualityAccept==1?true:false;
-                    case 14:
-                        item.isShow=listData.statisticsAnalysis==1?true:false;
-                    case 15:
-                        item.isShow=listData.seniorFun==1?true:false;
-                    break;
-                }
-            })
+        // 返回项目列表页
+        toProjectList(){
+            this.$router.replace({path:'/webContent/project'})
         }
     }
 }
@@ -175,6 +142,13 @@ export default {
         // 面包屑导航
         .crumbs{
             height: 4%;
+            padding: 0 10px;
+            span:nth-of-type(1){
+                cursor: pointer;
+            }
+            span:nth-of-type(1):hover{
+                color: #1890ff;
+            }
         }
         // layOut布局
         .layOut{

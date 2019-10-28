@@ -1,4 +1,5 @@
 <template>
+    <!-- 项目列表表格 -->
     <div  class='projects'>
         <a-table :columns="columns" :dataSource="list" :customRow='toProjetDetail' :pagination='false'  bordered>
             <template slot="projectName" slot-scope="text">
@@ -15,19 +16,24 @@ export default {
         return{
             columns : [{
                 title: '项目名称',
+                align: 'center',
                 dataIndex: 'projectName',
                 scopedSlots: { customRender: 'projectName' },
             }, {
                 title: '建设单位',
+                align: 'center',
                 dataIndex: 'buildingSide',
             }, {
                 title: '施工单位',
+                align: 'center',
                 dataIndex: 'constructionUnit',
             },{
                 title: '造价',
+                align: 'center',
                 dataIndex: 'projectCost',
             },{
                 title:"",
+                align: 'center',
                 dataIndex:"projectStatus"
             }],
             list:[],
