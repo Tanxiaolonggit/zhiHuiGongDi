@@ -45,7 +45,7 @@ export default {
 <style lang="less" scoped>
 .nav{
   display: flex;
-  background: #26abe2;
+  background: #1890ff ;
   height: 8%;
   justify-content: space-between;
   .logo{

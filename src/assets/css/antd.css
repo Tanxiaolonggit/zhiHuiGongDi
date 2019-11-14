@@ -1,0 +1,14 @@
+/* antd日历 */
+.signAdministration .ant-fullcalendar-fullscreen .ant-fullcalendar-date{
+    height:220px!important;
+}
+.signAdministration .ant-fullcalendar-content{
+    height: 180px!important;
+    
+}
+.signAdministration .ant-fullcalendar-content .notes-month{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}

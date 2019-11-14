@@ -35,31 +35,28 @@
                     <a-menu-item v-if="funList.dangerProject==1" @click="toggleTab(7)">
                         <span >危大工程</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.hiddenDanger==1" @click="toggleTab(8)">
-                        <span >隐患检排</span>
-                    </a-menu-item> 
-                    <a-menu-item v-if="funList.inspection==1" @click="toggleTab(9)">
+                    <a-menu-item v-if="funList.inspection==1" @click="toggleTab(8)">
                         <span >检验检测</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.supervisionReport==1" @click="toggleTab(10)">
+                    <a-menu-item v-if="funList.supervisionReport==1" @click="toggleTab(9)">
                         <span >监理报告</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.warn==1" @click="toggleTab(11)">
+                    <a-menu-item v-if="funList.warn==1" @click="toggleTab(10)">
                         <span >预警信息</span>
                     </a-menu-item> 
-                     <a-menu-item v-if="funList.material==1" @click="toggleTab(12)">
+                     <a-menu-item v-if="funList.material==1" @click="toggleTab(11)">
                         <span >建材管理</span>
                     </a-menu-item> 
-                     <a-menu-item v-if="funList.qualityAccept==1" @click="toggleTab(13)">
+                     <a-menu-item v-if="funList.qualityAccept==1" @click="toggleTab(12)">
                         <span >质量验收</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.examine==1" @click="toggleTab(14)">
+                    <a-menu-item v-if="funList.examine==1" @click="toggleTab(13)">
                         <span >巡检信息</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.statistics==1" @click="toggleTab(15)">
+                    <a-menu-item v-if="funList.statistics==1" @click="toggleTab(14)">
                         <span >统计分析</span>
                     </a-menu-item> 
-                    <a-menu-item v-if="funList.seniorFun==1" @click="toggleTab(16)">
+                    <a-menu-item v-if="funList.seniorFun==1" @click="toggleTab(15)">
                         <span >特色功能</span>
                     </a-menu-item> 
                 </a-menu>
@@ -71,9 +68,13 @@
                 <videoSurveillance v-else-if="selectTab==1"></videoSurveillance>
                 <personList v-else-if="selectTab==2"></personList>  
                 <sign v-else-if="selectTab==3"></sign>    
-                <salary v-else-if="selectTab==4"></salary>             
+                <salary v-else-if="selectTab==4"></salary>   
+                <towerCrane v-else-if="selectTab==5"></towerCrane>    
+                <environment v-else-if="selectTab==6"></environment>      
                 <dangerProject v-else-if="selectTab==7"></dangerProject>
-                <warns v-else-if="selectTab==11"></warns>
+                <inspection v-else-if="selectTab==8"></inspection>
+                <warns v-else-if="selectTab==10"></warns>
+                <buildingMaterial v-else-if="selectTab==11"></buildingMaterial>
             </div>
         </a-layout>
     </div>
@@ -83,22 +84,30 @@
 import basicMsg from '../../../components/projects/pages/basicMsg'
 // 人员列表
 import personList from '../../../components/projects/pages/personList'
-// 薪资管理
-import salary from '../../../components/projects/pages/salary'
 // 视频监控
 import videoSurveillance from '../../../components/projects/pages/videoSurveillance'
 // 出勤管理
 import sign from '../../../components/projects/pages/sign'
+// 薪资管理
+import salary from '../../../components/projects/pages/salary'
+// 设备管理
+import towerCrane from '../../../components/projects/pages/towerCrane'
+// 环境监测
+import environment from '../../../components/projects/pages/environment'
 // 危大工程
 import dangerProject from '../../../components/projects/pages/dangerProject'
+// 检验监测
+import inspection from '../../../components/projects/pages/inspection'
 // 预警信息
 import warns from '../../../components/projects/pages/warns'
+// 建材管理
+import buildingMaterial from '../../../components/projects/pages/buildingMaterial'
 export default {
     name:'project',
     components:{
-        basicMsg,personList,salary,videoSurveillance,sign,
-        dangerProject,
-        warns,
+        basicMsg,videoSurveillance,personList,salary,towerCrane,environment,sign,
+        dangerProject,inspection,
+        warns,buildingMaterial
     },
     data(){
         return{

@@ -103,6 +103,7 @@ export default {
         // 员工名单翻页
         preNextPage2(e){
            this.pageNum2=e; 
+           console.log( this.pageNum2)
            this.getPersonAll();
         },
         // 获取管理员列表
@@ -120,8 +121,8 @@ export default {
         getPersonAll(){
             this.$axios.post('/t_dz_person/selectPersonInfoAll',{
                 projectId:this.projectId,
-                pageNum:this.pageNum1,
-                pageSize:this.pageSize1
+                pageNum:this.pageNum2,
+                pageSize:this.pageSize2
             }).then((res)=>{
                 this.list2=res.data
                 this.total2=res.count

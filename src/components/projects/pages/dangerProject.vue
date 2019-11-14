@@ -74,6 +74,10 @@ export default {
 </script>
 <style lang="less" scoped>
     .dangerProjectList{
+        box-sizing: border-box;
+        height: 100%;
+        padding: 20px;
+        background: #fff;
         .pagination{
             text-align: right;
             box-sizing: border-box;

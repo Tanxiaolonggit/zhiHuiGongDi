@@ -17,7 +17,19 @@ function timestampToTime() {
   var s = date.getSeconds();
   return Y + M + D + h + m + s;
 }
-// 发送给后台的时间戳格式
+// 获取当前年+月
+function timeYearMonth(now) {
+  var date;//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+  if(now){
+    date=new Date(now);
+  }else{
+    date = new Date();
+  } 
+  var Y = date.getFullYear();
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) ;
+  return Y +"-"+ M 
+}
+// 发送给后台的时间戳格式 年-月-日
 var serverTimestamp = function (now) {
   var d = new Date(now)
   var year = d.getFullYear();
@@ -39,6 +51,48 @@ var serverTimestamp = function (now) {
   }
   // return year + "-" + month + "-" + date + ' ' + hours + ":" + minute;
   return year + "-" + month + "-" + date 
+}
+// 发送给后台的时间戳格式 年-月-
+var serverTimestamp2 = function (now) {
+  var d = new Date(now)
+  var year = d.getFullYear();
+  var month = d.getMonth() + 1;
+  var date = d.getDate();
+  let hours = d.getHours();
+  let minute = d.getMinutes();
+  if (month < 10) {
+    month = '0' + month
+  }
+  if (date < 10) {
+    date = '0' + date
+  }
+  if (hours < 10) {
+    hours = '0' + hours
+  }
+  if (minute < 10) {
+    minute = '0' + minute
+  }
+  return year + "-" + month 
+}
+// 获取当前时间的时或月
+function getTime(time,range){
+  let d = new Date(time)
+  let month = d.getMonth() + 1;
+  let date = d.getDate();
+  let hours = d.getHours();
+  let data;
+  if(range==1){
+    data=hours+'时'
+  }else{
+    data=month+'月'+date+'日'
+  }
+  return data
+}
+// 显示金额格式
+function setAmountFormat(num){
+  num = Number(num).toFixed(2);
+  num = Number(num).toLocaleString();
+  return num;//返回的是字符串23,245.12保留2位小数
 }
 function throttle(fn, gapTime) {
     if (gapTime == null || gapTime == undefined) {
@@ -69,5 +123,9 @@ export{
     throttle,
     timestampToTime,
     isLogin,
-    serverTimestamp
+    serverTimestamp,
+    serverTimestamp2,
+    getTime,
+    setAmountFormat,
+    timeYearMonth
 }

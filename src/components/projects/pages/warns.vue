@@ -151,7 +151,6 @@ export default {
                 this.searchMsg.warnTimeBegin=null
                 this.searchMsg.warnTimeEnd=null
             }
-            console.log(this.searchMsg)
         },
             // 选择等级
         handleChangeLevel(e){

@@ -14,6 +14,7 @@ export default {
 <style lang="less">
 html,body{
   height:100%;
+  min-width: 1000px;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
