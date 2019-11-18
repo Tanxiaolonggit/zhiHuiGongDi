@@ -376,14 +376,14 @@ export default {
           projectId: this.projectId
         })
         .then(res => {
-          this.monthProvideMap = res.data;
-          this.createEchar();
+            this.monthProvideMap = res.data;
+            this.createEchar();
         });
     },
     // 查询概况基本信息
     getMaterialBasic() {
       this.$axios
-        .post("/t_dz_material/selectMaterialBasic", {
+        .post("/t_dz_material/selectMaterialBasic", { 
           projectId: this.projectId,
           pageSize: 1,
           pageNum: 10

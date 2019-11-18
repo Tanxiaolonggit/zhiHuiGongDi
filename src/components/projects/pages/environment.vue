@@ -3,7 +3,7 @@
         <!-- 当前数据 -->
         <div v-if="nowEnvironment" class="nowEnvironment">
             <div class="nowEnvironmentTop">
-                <div style="color:#1E90FF">
+                <div style="color:#008B45">
                     <section>实时PM2.5</section>
                     <section><span>{{nowEnvironment.fenChen1}}</span><span>μg/m³</span></section>
                 </div>
@@ -13,7 +13,7 @@
                 </div>
                 <div style="color:#008B45">
                     <section>实时噪音</section>
-                    <section><span>{{nowEnvironment.zaoSheng}}</span><span>分贝</span></section>
+                    <section><span>{{nowEnvironment.zaoSheng}}</span><span>dB</span></section>
                 </div>
                 <div style="color:#008B45">
                     <section>实时风速</section>
@@ -24,7 +24,7 @@
                     <section><span>{{nowEnvironment.wenDu}}</span><span>℃</span></section>
                 </div>
             </div>
-            <div class="nowEnvironmentBot">最近采集时段：{{nowEnvironment.dataSampleTime}}</div>
+            <div class="nowEnvironmentBot">最近采集时间：{{nowEnvironment.dataSampleTime}}</div>
         </div>
         <!-- 按时段显示数据 -->
         <div class="timeEnvironment">
@@ -61,7 +61,7 @@
             <!-- 温度 -->
             <div class="wendu charts">
                 <div class="chartstitle">
-                    <span>风速</span>
+                    <span>温度</span>
                     <div>
                         <checkDays froms='wenDu' @getData='getData'></checkDays>
                     </div>

@@ -24,6 +24,20 @@
                 </div>
             </div>
         </div>
+        <div v-if='listisshow' class="signlist">
+            <div class="bac" @click="listisshow=false"></div>
+            <div class="cont">
+                <div class="title">员工考勤</div>
+                <div class="tableout">
+                    <a-table :columns="columns" :dataSource="list" :pagination='false' bordered>
+                        <template slot="headPhoto" slot-scope="text">
+                            <img :src='text'/>
+                        </template> 
+                    </a-table>
+                    <a-pagination  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -34,21 +48,66 @@ export default {
         return{
             // 查找界面显示隐藏
             search:false,
+            searchtype:-1, //查找类型 0是按当天具体某项查找 1是按工号等键入信息查找
+            // 搜索
             searchData:{
                 personId:'',
                 signTimeBegin:'',
                 signTimeEnd:'',
                 name:''
             },
+            // 某一项详情签到
+            detailData:{
+                signDate:'',
+                type:''
+            },
             projectId:this.$route.params.projectId,
             pageNum:1,
-            pageSize:10,
+            pageSize:5,
+            total:0,
+            // 考勤详情是否显示
+            listisshow:false,
+            list:[],
+            columns:[{
+                title: '头像',
+                align: 'center',
+                dataIndex: 'headPhoto',
+                scopedSlots: { customRender: 'headPhoto' },
+            }, {
+                title: '工号',
+                align: 'center',
+                dataIndex: 'personId',
+            }, {
+                title: '姓名',
+                align: 'center',
+                dataIndex: 'name',
+            },{
+                title: '所属单位',
+                align: 'center',
+                dataIndex: 'company',
+            },{
+                title:"上班",
+                dataIndex:"signIn",
+                align: 'center',
+            },{
+                title:"下班",
+                dataIndex:"signOut",
+                align: 'center',
+            }],
             // 月考勤数据
-            monthData:[]
+            monthData:[],
         }
     },
     mounted(){
         this.getMonthSign(timeYearMonth());
+    },
+    watch:{
+        "listisshow":function(n,o){
+            // 每次列表消失 清空用户上次展示的类型
+            if(!n){
+                this.searchtype=-1;
+            }
+        }
     },
     methods:{
         // 选择月份
@@ -99,15 +158,9 @@ export default {
             })
             return str
         },
-        // 查看考情详情
-        signDetail(value,index){
-            console.log(value,index)
-            this.typeSearch(serverTimestamp(value),index)
-        },
         // 查找界面显示隐藏
-        toggleSearch(){
-            this.search=!this.search
-            // 关闭后清空
+        toggleSearch(){          
+            // 触发前如果是关闭状态 清空搜索数据
             if(!this.search){
                 this.searchData={
                     personId:'',
@@ -116,6 +169,7 @@ export default {
                     name:''
                 }
             }
+            this.search=!this.search
         },
         // 按工号选择时间
         gonghaoDate(e){
@@ -128,6 +182,29 @@ export default {
                 this.searchData.signTimeEnd=''
             }
         },
+        // 查看当日某项考情详情
+        signDetail(value,index){
+            this.detailData={
+                'signDate':serverTimestamp(value),
+                'type':index
+            }
+            this.typeSearch()
+        },
+        // 按照点击类型查找当日考勤
+        typeSearch(){
+            this.$axios.post('/t_dz_sign/selectSignCalendarSub',{
+                pageNum:this.pageNum,
+                pageSize:this.pageSize,
+                projectId:this.projectId,
+                ...this.detailData
+            }).then((res)=>{
+                this.list=res.data
+                this.total=res.count
+                this.searchtype=0
+                this.listisshow=true
+                console.log(res)
+            })
+        },
         // 按工号查找
         numSearch(){
             this.$axios.post('/t_dz_sign/selectSign',{
@@ -136,20 +213,21 @@ export default {
                 projectId:this.projectId,
                 ...this.searchData
             }).then((res)=>{
+                this.list=res.data
+                this.total=res.count
+                this.searchtype=1
+                this.search=false;
+                this.listisshow=true
                 console.log(res)
             })
         },
-        // 按照点击类型查找当日考勤
-        typeSearch(date,type){
-            this.$axios.post('/t_dz_sign/selectSignCalendarSub',{
-                pageNum:this.pageNum,
-                pageSize:this.pageSize,
-                projectId:this.projectId,
-                type:type,
-                signDate:date
-            }).then((res)=>{
-                console.log(res)
-            })
+        // 下一页
+        preNextPage(){
+            if(this.searchtype==0){
+                this.typeSearch();
+            }else if(this.searchtype==1){
+                this.numSearch();
+            }
         }
     }
     
@@ -249,6 +327,58 @@ export default {
                         background: #1890ff ;
                         color: #fff;
                         border: 1px solid transparent;
+                    }
+                }
+            }
+        }
+        .signlist{
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9;
+            .bac{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 10;
+            }
+            .cont{
+                background: #fff;
+                position: absolute;
+                width:80%;
+                height: 75%;
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                z-index: 11;
+                padding: 20px 0;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                .title{
+                    margin-left: 20px;
+                    margin-bottom: 10px;
+                    font-weight: 600;
+                    padding-bottom:10px;
+                    border-bottom: 1px solid #444;
+                }
+                .tableout{
+                    flex: 1;
+                    padding:0 20px;
+                    box-sizing: border-box;
+                    overflow-y: auto;
+                    img{
+                        width: 50px;
+                        height:70px;
+                    }
+                    .pagination{
+                        text-align: right;
+                        margin-top: 10px;
                     }
                 }
             }

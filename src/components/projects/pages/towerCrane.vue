@@ -59,7 +59,7 @@
                         <div>
                             <p><span>设备状态</span><span :style="{border:'1px solid',padding:'2px',fontSize:'12px',color:towerMsg.deviceStatus==1?'#52c41a':'#f5222d',background:towerMsg.deviceStatus==1?'#f6ffed':'#fff1f0'}">{{towerMsg.deviceStatus==1?'在线':'离线'}}</span></p>
                             <p><span>负荷量</span><span>{{towerMsg.deviceLoad}}Kg</span></p>
-                            <p><span>负载率</span><span> <a-progress type="circle" :percent="towerMsg.deviceLoadRate" :width="40" /></span></p>
+                            <p><span>负载率</span><span> <a-progress v-if='towerMsg.deviceLoadRate' type="circle" :percent="Number(towerMsg.deviceLoadRate)" :width="40" /></span></p>
                             <p><span>小车幅度</span><span>{{towerMsg.deviceRange}}°</span></p>
                             <p><span>安全载重</span><span>{{towerMsg.deviceSafeLoad}}Kg</span></p>
                             <p><span>数据采集时间</span><span>{{towerMsg.dataSampleTime}}</span></p>
@@ -78,7 +78,12 @@ export default {
             projectId:this.$route.params.projectId,
             towerCraneList:[],
             towerDetail:null,
-            towerMsg:null
+            towerMsg:null,
+            warnsData:{
+                'oneDay':'',
+                'sevenDay':'',
+                'eleDay':''
+            }
         }
     },
     mounted(){
@@ -114,7 +119,19 @@ export default {
                 pageSize:100,
                 deviceId:deviceId
             }).then((res)=>{
+                // 获取设备预警次数
+                this.getDeviceWarn(deviceId,2)
                 this.towerMsg=res.data[0]
+            })
+        },
+        // 获取预警次数
+        getDeviceWarn(id,range){
+            this.$axios.post('/t_dz_tadiaodevice/selectTaDiaoDeviceWarn',{
+                projectId:this.projectId,
+                deviceId:id,
+                range:range,
+            }).then((res)=>{
+                console.log(res)
             })
         },
         // 返回设备列表
@@ -136,6 +153,7 @@ export default {
         .shebeilist{
             width: 100%;
             .sheibeiBlock{
+                cursor: pointer;
                 box-sizing: border-box;
                 width: 50%;
                 display: inline-flex;

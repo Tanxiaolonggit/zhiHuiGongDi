@@ -16,7 +16,7 @@
                         <span >项目简介</span>
                     </a-menu-item> 
                     <a-menu-item v-if="funList.video==1" @click="toggleTab(1)">
-                        <span >监控管理</span>
+                        <span >安防监控</span>
                     </a-menu-item> 
                     <a-sub-menu >
                         <span slot="title"><span>员工管理</span></span>
@@ -84,7 +84,7 @@
 import basicMsg from '../../../components/projects/pages/basicMsg'
 // 人员列表
 import personList from '../../../components/projects/pages/personList'
-// 视频监控
+// 安防监控
 import videoSurveillance from '../../../components/projects/pages/videoSurveillance'
 // 出勤管理
 import sign from '../../../components/projects/pages/sign'

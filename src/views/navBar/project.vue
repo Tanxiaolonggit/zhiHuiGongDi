@@ -5,6 +5,11 @@
             <template slot="projectName" slot-scope="text">
                 <a>{{text}}</a>
             </template>
+            <template  slot="projectStatus" slot-scope="text,record">
+                <span class="status" :style="{background:record.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.projectStatus==1?'#1bd177':'#f6485c'}">{{record.projectStatus==1?'在建':'竣工'}}</span>
+                <span class="status" v-if='record.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
+                <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.demoProject==1?'示范':'非示范'}}</span>
+            </template>
         </a-table>
         <a-pagination  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
     </div>
@@ -28,13 +33,14 @@ export default {
                 align: 'center',
                 dataIndex: 'constructionUnit',
             },{
-                title: '造价',
+                title: '造价(万元)',
                 align: 'center',
                 dataIndex: 'projectCost',
             },{
                 title:"",
                 align: 'center',
-                dataIndex:"projectStatus"
+                dataIndex:"projectStatus",
+                scopedSlots: { customRender: 'projectStatus' },
             }],
             list:[],
             pageNum:1,
@@ -88,6 +94,12 @@ export default {
             text-align: right;
             box-sizing: border-box;
             padding-top: 10px;
+        }
+        .status{
+            font-size: 10px!important;
+            display:inline-block!important;
+            padding:2px!important;
+            margin-right: 5px;        
         }
     }
 </style>

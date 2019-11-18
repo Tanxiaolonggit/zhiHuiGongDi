@@ -12,3 +12,14 @@
     flex-direction: column;
     justify-content: space-between; 
 }
+/* 表格内间距 */
+.ant-table-tbody > tr > td{
+    padding:10px 10px!important;
+}
+/* 考勤页日期修改 */
+.signAdministration .ant-fullcalendar-header{
+    text-align: center;
+}
+.signAdministration .ant-radio-group-outline{
+    display: none;
+}

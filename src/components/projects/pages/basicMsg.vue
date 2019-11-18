@@ -11,6 +11,8 @@
                     <div>项目造价：{{projectDetail.projectCost}}万元</div>
                     <div>状态：
                         <span :style="{background:projectDetail.projectStatus==1?'#edf7f1':'#f8f2f1',color:projectDetail.projectStatus==1?'#1bd177':'#f6485c'}">{{projectDetail.projectStatus==1?'在建':'竣工'}}</span>
+                        <span v-if='projectDetail.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
+                        <span style="color:#fa8c16;background:#fff7e6">{{projectDetail.demoProject==1?'示范工程':'非示范工程'}}</span>
                     </div>
                 </div>
                 <div class="otherMsg_mid">
@@ -110,19 +112,21 @@ export default {
         .otherMsg{
             padding-top: 10px;
             display: flex;
-            width: 80%;
+            width:100%;
             justify-content: space-between;
             box-sizing: border-box;
             .otherMsg_left{
                 div{
                     margin:10px 0;
+                    span{
+                        font-size: 12px;
+                        display: inline-block;
+                        text-align: center;
+                        margin-right: 10px;
+                        white-space: nowrap;
+                    }
                 }
-                span{
-                    font-size: 14px;
-                    display: inline-block;
-                    width: 40px;
-                    text-align: center;
-                }
+                
             }
             .otherMsg_mid{
                 div{

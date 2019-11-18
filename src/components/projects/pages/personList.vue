@@ -15,7 +15,7 @@
             </a-tab-pane>
             <!-- 员工名单表格 -->
             <a-tab-pane class="management" tab="员工名单" key="2" forceRender>
-                <a-table :columns="columns" :dataSource="list2" :pagination='false' bordered>
+                <a-table :columns="column2" :dataSource="list2" :pagination='false' bordered>
                     <template slot="headPhoto" slot-scope="text">
                         <img :src='text'/>
                     </template>
@@ -36,16 +36,20 @@ export default {
             // 管理人员表格
             columns:[{
                 title: '头像',
+                align: 'center',
                 dataIndex: 'headPhoto',
                 scopedSlots: { customRender: 'headPhoto' },
             }, {
                 title: '工号',
+                align: 'center',
                 dataIndex: 'personId',
             }, {
                 title: '姓名',
+                align: 'center',
                 dataIndex: 'name',
             },{
                 title: '人员类别',
+                align: 'center',
                 dataIndex: 'category',
                 customRender:(text, record, index)=>{
                     switch(text){
@@ -59,7 +63,53 @@ export default {
                 }
             },{
                 title:"工种",
-                dataIndex:"position"
+                dataIndex:"position",
+                align: 'center',
+            }],
+            // 员工名单
+            column2:[{
+                title: '头像',
+                align: 'center',
+                dataIndex: 'headPhoto',
+                scopedSlots: { customRender: 'headPhoto' },
+            }, {
+                title: '工号',
+                align: 'center',
+                dataIndex: 'personId',
+            }, {
+                title: '姓名',
+                align: 'center',
+                dataIndex: 'name',
+            },{
+                title: '人员类别',
+                align: 'center',
+                dataIndex: 'category',
+                customRender:(text, record, index)=>{
+                    switch(text){
+                        case "1":
+                            return '管理人员'
+                        case "2":
+                            return '监理人员'
+                        case "3":
+                            return '普通人员'
+                    }
+                }
+            },{
+                title:"工种",
+                dataIndex:"position",
+                align: 'center',
+            },{
+                title:"年龄",
+                dataIndex:"age",
+                align: 'center',
+            },{
+                title:"联系电话",
+                dataIndex:"phoneNum",
+                align: 'center',
+            },{
+                title:"地址",
+                dataIndex:"homeAddress",
+                align: 'center',
             }],
             // 管理人员列表
             list1:[],
@@ -162,12 +212,19 @@ export default {
 </script>
 <style lang="less" scoped>
     .personList{
+        background: #fff;
+        height: 100%;
+        overflow:scroll;
         padding: 10px;
         box-sizing: border-box;
         // 表格
         .personList_table{
             // 管理人员
             .management{
+                img{
+                    width: 50px;
+                    height: 70px;
+                }
                 // 分页器
                 .pagination{
                     text-align: center;

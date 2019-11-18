@@ -8,17 +8,13 @@
           <a-icon type="pie-chart" />
           <p>项目</p>
         </router-link>
-        <router-link class="routerLink" to='/webContent/scene' >
-          <a-icon type="desktop" />
-          <p>现场</p>
-        </router-link>
         <router-link class="routerLink" to='/webContent/maps' >
           <a-icon type="global" />
           <p>地图</p>
         </router-link>
         <router-link class="routerLink" to='/webContent/application' >
           <a-icon type="appstore" />
-          <p>应用</p>
+          <p>管理中心</p>
         </router-link>
         <router-link class="routerLink" to='/webContent/userData' >
           <a-icon type="user" />
@@ -62,7 +58,7 @@ export default {
     .routerLink{
       color: #fff;
       height: 100%;
-      width: 20%;
+      width: 25%;
       display: flex;
       flex-direction: column;
       justify-content: center;

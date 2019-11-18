@@ -47,11 +47,6 @@ export default new Router({
           component: resolve => require(['./views/pages/projects/projectsDetail.vue'], resolve)
         },
         {
-          path: "/webContent/scene",
-          name: "scene",
-          component: resolve => require(['./views/navBar/scene.vue'], resolve)
-        },
-        {
           path: "/webContent/maps",
           name: "maps",
           component: resolve => require(['./views/navBar/maps.vue'], resolve)
