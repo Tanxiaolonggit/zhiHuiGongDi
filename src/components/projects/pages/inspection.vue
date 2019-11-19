@@ -9,9 +9,12 @@
                 </a-select>
             </div>
             <div class="cont">
-                <a-table :columns="columns" :dataSource="list" :customRow="toDetail" :pagination='false'  bordered>
+                <a-table :columns="columns" :dataSource="list" :pagination='false'  bordered>
+                    <template slot="detail" slot-scope="text,rows">
+                        <a @click="toDetail(text,rows)">详情</a>
+                    </template>
                 </a-table>
-                <a-pagination  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
+                <a-pagination showQuickJumper  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
             </div>
         </div>
         <div v-else class="inspectionDetail">
@@ -111,6 +114,11 @@ export default {
                 title:'检测结论',
                 align: 'center',
                 dataIndex:"checkResult",
+            },{
+              title:'',
+              align: 'center',
+              dataIndex:"detail",  
+              scopedSlots: { customRender: 'detail' },
             }]
         }
     },
@@ -156,14 +164,8 @@ export default {
             this.reportDetail=null
         },
         // 报告详情
-        toDetail(record, index){
-            return{
-                on:{
-                    click:()=>{
-                        this.reportDetail=record
-                    }
-                }
-            }
+        toDetail(text, rows){
+            this.reportDetail=rows
         }
     }
 }

@@ -34,7 +34,7 @@
                         <span>{{text==0?'支出':'支入'}}</span>
                     </template>
                 </a-table>
-                <a-pagination  class="pagination" @change='preNextPage1' :defaultCurrent="accountWaterPageNum" :defaultPageSize="accountWaterPageSize" :total="accountWaterTotal" />
+                <a-pagination showQuickJumper  class="pagination" @change='preNextPage1' :defaultCurrent="accountWaterPageNum" :defaultPageSize="accountWaterPageSize" :total="accountWaterTotal" />
             </div>    
         </div>
         <!-- 农民工工资月度发放情况 -->
@@ -45,7 +45,7 @@
             </div>  
             <div class="salarycont">
                 <a-table :columns="columns2" :dataSource="list2" :pagination='false'  bordered></a-table>
-                <a-pagination  class="pagination" @change='preNextPage2' :defaultCurrent="monthDetailPageNum" :defaultPageSize="monthDetailPageSzie" :total="monthDetailTotal" />
+                <a-pagination showQuickJumper  class="pagination" @change='preNextPage2' :defaultCurrent="monthDetailPageNum" :defaultPageSize="monthDetailPageSzie" :total="monthDetailTotal" />
             </div>     
         </div>
     </div>

@@ -52,6 +52,9 @@
                             <p><span>设备剩余寿命</span><span>{{towerDetail.deviceLife}}年</span></p>
                             <p><span>进场日期</span><span>{{towerDetail.enterDate}}</span></p>
                             <p><span>安装日期</span><span>{{towerDetail.installDate}}</span></p>
+                            <p><span>进24小时预警：</span><span>{{warnsData.oneDay}}次</span></p>
+                            <p><span>进7天预警：</span><span>{{warnsData.sevenDay}}次</span></p>
+                            <p><span>进30天预警：</span><span>{{warnsData.eleDay}}次</span></p>
                         </div>
                     </section>
                     <section>
@@ -61,6 +64,11 @@
                             <p><span>负荷量</span><span>{{towerMsg.deviceLoad}}Kg</span></p>
                             <p><span>负载率</span><span> <a-progress v-if='towerMsg.deviceLoadRate' type="circle" :percent="Number(towerMsg.deviceLoadRate)" :width="40" /></span></p>
                             <p><span>小车幅度</span><span>{{towerMsg.deviceRange}}°</span></p>
+                            <p><span>风速(m/s)</span><span>{{towerMsg.windSpeed}}</span></p>
+                            <p><span>高度(m)</span><span>{{towerMsg.deviceHeight}}</span></p>  
+                            <p><span>吊钩高度(m)</span><span>{{towerMsg.deviceHookHeight}}</span></p>  
+                            <p><span>斜角</span><span>{{towerMsg.deviceBeveAngle}}°</span></p>      
+                            <p><span>力矩</span><span>{{towerMsg.deviceMoment}}%</span></p>  
                             <p><span>安全载重</span><span>{{towerMsg.deviceSafeLoad}}Kg</span></p>
                             <p><span>数据采集时间</span><span>{{towerMsg.dataSampleTime}}</span></p>
                         </div>
@@ -80,9 +88,20 @@ export default {
             towerDetail:null,
             towerMsg:null,
             warnsData:{
-                'oneDay':'',
-                'sevenDay':'',
-                'eleDay':''
+                'oneDay':0,
+                'sevenDay':0,
+                'eleDay':0
+            }
+        }
+    },
+    watch:{
+        'towerDetail':function(n,o){
+            if(!n){
+                this.warnsData={
+                    'oneDay':0,
+                    'sevenDay':0,
+                    'eleDay':0
+                }
             }
         }
     },
@@ -120,7 +139,9 @@ export default {
                 deviceId:deviceId
             }).then((res)=>{
                 // 获取设备预警次数
-                this.getDeviceWarn(deviceId,2)
+                this.getDeviceWarn(deviceId,1)
+                this.getDeviceWarn(deviceId,7)
+                this.getDeviceWarn(deviceId,30)
                 this.towerMsg=res.data[0]
             })
         },
@@ -131,7 +152,17 @@ export default {
                 deviceId:id,
                 range:range,
             }).then((res)=>{
-                console.log(res)
+                switch(range){
+                    case 1:
+                        this.warnsData.oneDay=res.count
+                        break;
+                    case 7:
+                        this.warnsData.sevenDay=res.count
+                        break;
+                    case 30:
+                        this.warnsData.eleDay=res.count
+                        break;
+                }
             })
         },
         // 返回设备列表

@@ -3,7 +3,7 @@
         <!-- 按钮 -->
         <div class="warns_btn">
             <a-button @click="getWarns" type="primary">重置</a-button>
-            <a-button @click="showModal" type="primary">搜索</a-button>
+            <a-button @click="showModal" type="primary">查询</a-button>
         </div>
         <!-- 模态框 -->
         <a-modal
@@ -13,7 +13,7 @@
             @cancel="handleCancel"
             :destroyOnClose='true'
             :mask='true'
-            okText='搜索'
+            okText='查询'
             cancelText='取消'
         >
             <div class="modal_selcet" style='margin: 10px 0;'>
@@ -50,7 +50,7 @@
                     <span :style="{borderColor:text==0?'#b7eb8f':'#ffbb96',color:text==0?'#52c41a':'#fa541c',background:text==0?'#f6ffed':'#fff2e8'}" class="tags">{{text==0?'已处理':'未处理'}}</span>
                 </template>
             </a-table>
-            <a-pagination  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
+            <a-pagination showQuickJumper  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
         </div>
     </div>
 </template>

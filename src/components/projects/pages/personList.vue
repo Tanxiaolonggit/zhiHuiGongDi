@@ -11,7 +11,7 @@
                         <img :src='text'/>
                     </template>
                 </a-table>
-                <a-pagination  class="pagination" @change='preNextPage1' :defaultCurrent="pageNum1" :defaultPageSize="pageSize1" :total="total1" />
+                <a-pagination showQuickJumper  class="pagination" @change='preNextPage1' :defaultCurrent="pageNum1" :defaultPageSize="pageSize1" :total="total1" />
             </a-tab-pane>
             <!-- 员工名单表格 -->
             <a-tab-pane class="management" tab="员工名单" key="2" forceRender>
@@ -20,7 +20,7 @@
                         <img :src='text'/>
                     </template>
                 </a-table>
-                <a-pagination  class="pagination" @change='preNextPage2' :defaultCurrent="pageNum2" :defaultPageSize="pageSize2" :total="total2" />
+                <a-pagination showQuickJumper  class="pagination" @change='preNextPage2' :defaultCurrent="pageNum2" :defaultPageSize="pageSize2" :total="total2" />
             </a-tab-pane>
         </a-tabs>
     </div>

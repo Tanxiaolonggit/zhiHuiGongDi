@@ -34,7 +34,7 @@
                             <img :src='text'/>
                         </template> 
                     </a-table>
-                    <a-pagination  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
+                    <a-pagination showQuickJumper  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
                 </div>
             </div>
         </div>

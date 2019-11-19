@@ -39,7 +39,7 @@
                 </div>
                 <div class="pagination">
                     <span>共{{total}}条数据</span>
-                    <a-pagination @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
+                    <a-pagination showQuickJumper @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
                 </div>
                 
             </div>
