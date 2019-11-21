@@ -49,6 +49,16 @@
                 <template slot="warnStatus" slot-scope="text">
                     <span :style="{borderColor:text==0?'#b7eb8f':'#ffbb96',color:text==0?'#52c41a':'#fa541c',background:text==0?'#f6ffed':'#fff2e8'}" class="tags">{{text==0?'已处理':'未处理'}}</span>
                 </template>
+                <template slot="warnContent" slot-scope="text">
+                    <a-popover >
+                        <template slot="content">
+                            <div style="width:300px;">
+                                {{text}}
+                            </div>        
+                        </template>
+                        <div style="text-align:center;width:220px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;word-wrap:break-word;margin:0 auto;">{{text}}</div>
+                    </a-popover>
+                </template>
             </a-table>
             <a-pagination showQuickJumper  class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
         </div>
@@ -79,7 +89,9 @@ export default {
             },{
                 title: '预警内容',
                 align: 'center',
+                width:'30%',
                 dataIndex: 'warnContent',
+                scopedSlots: { customRender: 'warnContent' },
             },{
                 title:"预警详情",
                 align: 'center',

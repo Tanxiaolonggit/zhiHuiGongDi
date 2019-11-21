@@ -36,7 +36,7 @@
                         <span >危大工程</span>
                     </a-menu-item> 
                     <a-menu-item v-if="funList.inspection==1" @click="toggleTab(8)">
-                        <span >检验检测</span>
+                        <span >检验监管</span>
                     </a-menu-item> 
                     <a-menu-item v-if="funList.supervisionReport==1" @click="toggleTab(9)">
                         <span >监理报告</span>
@@ -96,7 +96,7 @@ import towerCrane from '../../../components/projects/pages/towerCrane'
 import environment from '../../../components/projects/pages/environment'
 // 危大工程
 import dangerProject from '../../../components/projects/pages/dangerProject'
-// 检验监测
+// 检验监管
 import inspection from '../../../components/projects/pages/inspection'
 // 预警信息
 import warns from '../../../components/projects/pages/warns'
