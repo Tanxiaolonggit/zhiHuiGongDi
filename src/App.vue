@@ -6,7 +6,7 @@
   </a-locale-provider>
 </template>
 <script>
-import layout from './views/layout.vue'
+import layout from './views/layout.vue';
 // antd-vue 国际化配置
 import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
 export default {
@@ -17,7 +17,7 @@ export default {
   },
   components:{
     layout
-  },
+  }
 }
 </script>
 <style lang="less">

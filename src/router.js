@@ -12,7 +12,7 @@ export default new Router({
     // 登陆页
     {
       path: "/login",
-      name: "userData",
+      name: "login",
       component: resolve => require(['./views/pages/login/login.vue'], resolve)
     },
     // 通知公告页

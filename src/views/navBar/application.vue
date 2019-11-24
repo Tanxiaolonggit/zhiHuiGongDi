@@ -1,5 +1,5 @@
 <template>
-    <div>应用</div>
+    <div></div>
 </template>
 <script>
 export default {
@@ -7,6 +7,16 @@ export default {
     data(){
         return{
             
+        }
+    },
+    methods:{
+        // 获取左侧功能列表
+        getAppList(){
+            this.$axios.post('/t_dz_managecenter/selectManagerCenterFun',{
+
+            }).then((res)=>{
+                console.log(res)
+            })
         }
     }
 }
