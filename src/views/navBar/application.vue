@@ -10,8 +10,8 @@
                 >
                     <a-sub-menu key="sub1">
                         <div slot="title">基本档案</div>
-                        <a-menu-item key='0' v-if='funcList.basicBlock.projectInfo'>项目档案</a-menu-item>
-                        <a-menu-item key='1' v-if='funcList.basicBlock.companyInfo'>企业档案</a-menu-item>
+                        <a-menu-item key='0' v-if='funcList.basicBlock.projectInfo'><router-link :to='{name:"projectInfo"}'>项目档案</router-link></a-menu-item>
+                        <a-menu-item key='1' v-if='funcList.basicBlock.companyInfo'><router-link :to='{name:"companyInfo"}'>企业档案</router-link></a-menu-item>
                         <a-menu-item key='2' v-if='funcList.basicBlock.supplierInfo'>供应商档案</a-menu-item>
                         <a-menu-item key='3' v-if='funcList.basicBlock.concrete'>混凝土企业档案</a-menu-item>
                         <a-menu-item key='4' v-if='funcList.basicBlock.checkInfo'>检验检测对照管理</a-menu-item>
@@ -56,7 +56,9 @@
                 </a-menu>
             </a-layout>   
         </div>
-        <div class="funcRight">456</div>
+        <div class="funcRight">
+            <router-view class="router"></router-view>
+        </div>
     </div>
 </template>
 <script>
@@ -82,7 +84,6 @@ export default {
                 userId:100031
             }).then((res)=>{
                 this.funcList=res.data[0]
-                console.log(res)
             })
         }
     }
@@ -97,7 +98,6 @@ export default {
             width: 15%;
             height: 100%;
             overflow: auto;
-            // display: inline-block;
             .layOut{
                 width: 100%;
                 height: 100%;
@@ -105,7 +105,11 @@ export default {
         }
         .funcRight{
             width:85%;
-            // display: inline-block;
+            height:100%;
+            .router{
+                width:100%;
+                height:100%;
+            }
         }
     }
 </style>

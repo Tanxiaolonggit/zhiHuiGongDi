@@ -1,3 +1,15 @@
+/* 全局表格样式 */
+.ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    padding:16px 0;
+    white-space: nowrap;
+}
+.ant-table-tbody > tr > td{
+    padding:10px 10px!important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    max-width: 0;
+}
 /* antd日历 */
 .signAdministration .ant-fullcalendar-fullscreen .ant-fullcalendar-date{
     height:220px!important;
@@ -12,10 +24,6 @@
     flex-direction: column;
     justify-content: space-between; 
 }
-/* 表格内间距 */
-.ant-table-tbody > tr > td{
-    padding:10px 10px!important;
-}
 /* 考勤页日期修改 */
 .signAdministration .ant-fullcalendar-header{
     text-align: center;
@@ -23,8 +31,12 @@
 .signAdministration .ant-radio-group-outline{
     display: none;
 }
-/* 管理中心也 左侧功能栏样式 */
+/* 管理中心页 左侧功能栏样式 */
 .application .ant-menu-item{  /* 子项*/
     padding: 0!important;
     text-align: center;
+}
+/* 管理中心页 面包屑导航样式*/
+.application .ant-breadcrumb{
+    padding: 10px;
 }

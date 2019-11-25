@@ -46,16 +46,34 @@ export default new Router({
           name: "projectsDtail",
           component: resolve => require(['./views/pages/projects/projectsDetail.vue'], resolve)
         },
+        // 地图
         {
           path: "/webContent/maps",
           name: "maps",
           component: resolve => require(['./views/navBar/maps.vue'], resolve)
         },
+        // 管理中心
         {
           path: "/webContent/application",
           name: "application",
-          component: resolve => require(['./views/navBar/application.vue'], resolve)
+          redirect:'/webContent/application/projectInfo',
+          component: resolve => require(['./views/navBar/application.vue'], resolve),
+          children:[
+            // 项目档案
+            {
+              path: "/webContent/application/projectInfo",
+              name:'projectInfo',
+              component: resolve => require(['./components/application/pages/projectInfo'], resolve)
+            },
+            // 企业档案
+            {             
+              path: "/webContent/application/companyInfo",
+              name:'companyInfo',
+              component: resolve => require(['./components/application/pages/companyInfo'], resolve)
+            }
+          ]
         },
+
         {
           path: "/webContent/userData",
           name: "userData",

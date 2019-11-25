@@ -102,9 +102,13 @@ export default {
         }
         .status{
             font-size: 10px!important;
-            display:inline-block!important;
-            padding:2px!important;
-            margin-right: 5px;        
+            display:block!important;      
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow:ellipsis;
+        }
+        .status:nth-of-type(2){
+            margin: 5px 0;
         }
     }
 </style>
