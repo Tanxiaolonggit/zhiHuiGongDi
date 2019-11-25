@@ -23,3 +23,8 @@
 .signAdministration .ant-radio-group-outline{
     display: none;
 }
+/* 管理中心也 左侧功能栏样式 */
+.application .ant-menu-item{  /* 子项*/
+    padding: 0!important;
+    text-align: center;
+}

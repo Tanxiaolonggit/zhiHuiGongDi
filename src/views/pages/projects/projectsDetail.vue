@@ -59,8 +59,7 @@
                     <a-menu-item v-if="funList.seniorFun==1" @click="toggleTab(15)">
                         <span >特色功能</span>
                     </a-menu-item> 
-                </a-menu>
-                
+                </a-menu>            
             </a-layout-sider>
             <!-- 右侧功能详情 -->
             <div class="project_content">

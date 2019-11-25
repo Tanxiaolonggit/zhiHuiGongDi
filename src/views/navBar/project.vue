@@ -15,6 +15,7 @@
     </div>
 </template>
 <script>
+import {isLogin,relogin} from '../../utils/util_one'
 export default {
     name:'project',
     data(){
@@ -49,7 +50,11 @@ export default {
         }
     },
     mounted(){
-        this.getProjectList();
+        if(isLogin()){
+            this.getProjectList();
+        }else{
+            relogin(this)
+        }     
     },
     methods:{
         // 点击前往项目详情

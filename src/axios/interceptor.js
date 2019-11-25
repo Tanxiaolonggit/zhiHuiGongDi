@@ -11,8 +11,8 @@ axios.create({
 axios.interceptors.request.use(config => {
     let user=null; 
     // 如果用户已经登陆 获取携带token
-    if(sessionStorage.getItem('userData') && config.url!='/t_dz_user/userLogin'){
-      user=JSON.parse(sessionStorage.getItem('userData'))
+    if(sessionStorage.getItem('dzwhuser') && config.url!='/t_dz_user/userLogin'){
+      user=JSON.parse(sessionStorage.getItem('dzwhuser'))
       config.data['userToken']=user.userToken
     }
     config.method === 'post'

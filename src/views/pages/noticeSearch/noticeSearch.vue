@@ -141,7 +141,7 @@ export default {
         },
         // 返回首页
         toIndex(){
-            let user=sessionStorage.getItem('userData')
+            let user=sessionStorage.getItem('dzwhuser')
             if(user){
                 this.$router.push({path:'/webContent/userData'})
             }else{

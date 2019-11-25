@@ -51,7 +51,7 @@ export default {
                     loginTime:timestampToTime()
                 }).then((res)=>{
                     // 存储用户信息
-                    sessionStorage.setItem('userData',JSON.stringify(res.detail))
+                    sessionStorage.setItem('dzwhuser',JSON.stringify(res.detail))
                     // 跳转到项目列表
                     if(res.code===0){
                         this.$router.replace({path:'/webContent'})

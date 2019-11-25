@@ -112,17 +112,21 @@ function throttle(fn, gapTime) {
 }
 // 判断用户是否登陆
 function isLogin(){
-  if(sessionStorage.getItem('userData')){
+  if(sessionStorage.getItem('dzwhuser')){
     return true
   }else{
     return false
   }
+}
+function relogin(that){
+  that.$router.push({path:'/login'})
 }
 export{
     formatDate,
     throttle,
     timestampToTime,
     isLogin,
+    relogin,
     serverTimestamp,
     serverTimestamp2,
     getTime,
