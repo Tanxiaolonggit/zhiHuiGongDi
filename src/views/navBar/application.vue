@@ -106,6 +106,8 @@ export default {
         .funcRight{
             width:85%;
             height:100%;
+            overflow-y: auto;
+            box-sizing: border-box;
             .router{
                 width:100%;
                 height:100%;

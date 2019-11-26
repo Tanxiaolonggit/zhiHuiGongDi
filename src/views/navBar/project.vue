@@ -6,7 +6,7 @@
                 <a>{{text}}</a>
             </template>
             <template  slot="projectStatus" slot-scope="text,record">
-                <span class="status" :style="{background:record.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.projectStatus==1?'#1bd177':'#f6485c'}">{{record.projectStatus==1?'在建':'竣工'}}</span>
+                <span class="status" :style="{background:record.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.projectStatus)}}</span>
                 <span class="status" v-if='record.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
                 <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.demoProject==1?'示范':'非示范'}}</span>
             </template>
@@ -16,6 +16,8 @@
 </template>
 <script>
 import {isLogin,relogin} from '../../utils/util_one'
+import {projectStatus} from '../../utils/dataDictionary.js'
+
 export default {
     name:'project',
     data(){
@@ -68,6 +70,9 @@ export default {
                     }
                 }
             }
+        },
+        statuss(num){
+            return projectStatus(num)
         },
         // 获取项目列表
         getProjectList(){
