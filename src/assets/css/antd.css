@@ -40,3 +40,8 @@
 .application .ant-breadcrumb{
     padding: 10px;
 }
+/* 项目档案页 下拉选择框样式 */
+.projectInfo .inputCont .ant-select-selection--single{
+    box-sizing: border-box;
+    width: 100%;
+}
