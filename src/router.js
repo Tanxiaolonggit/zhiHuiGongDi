@@ -70,6 +70,12 @@ export default new Router({
               path: "/webContent/application/companyInfo",
               name:'companyInfo',
               component: resolve => require(['./components/application/pages/companyInfo'], resolve)
+            },
+            // 供应商档案
+            {             
+              path: "/webContent/application/supplier",
+              name:'supplier',
+              component: resolve => require(['./components/application/pages/supplier'], resolve)
             }
           ]
         },

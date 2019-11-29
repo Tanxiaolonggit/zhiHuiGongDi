@@ -12,7 +12,7 @@
                         <div slot="title">基本档案</div>
                         <a-menu-item key='0' v-if='funcList.basicBlock.projectInfo'><router-link :to='{name:"projectInfo"}'>项目档案</router-link></a-menu-item>
                         <a-menu-item key='1' v-if='funcList.basicBlock.companyInfo'><router-link :to='{name:"companyInfo"}'>企业档案</router-link></a-menu-item>
-                        <a-menu-item key='2' v-if='funcList.basicBlock.supplierInfo'>供应商档案</a-menu-item>
+                        <a-menu-item key='2' v-if='funcList.basicBlock.supplierInfo'><router-link :to='{name:"supplier"}'>供应商档案</router-link></a-menu-item>
                         <a-menu-item key='3' v-if='funcList.basicBlock.concrete'>混凝土企业档案</a-menu-item>
                         <a-menu-item key='4' v-if='funcList.basicBlock.checkInfo'>检验检测对照管理</a-menu-item>
                         <a-menu-item key='5' v-if='funcList.basicBlock.bigDeviceInfo'>大型设备档案</a-menu-item>
@@ -68,6 +68,12 @@ export default {
     data(){
         return{
             funcList:null
+        }
+    },
+    created(){
+        // 页面刷新后重定向
+        if(this.$route.path !== '/webContent/application/projectInfo'){
+            this.$router.replace('/webContent/application/projectInfo')
         }
     },
     mounted(){
