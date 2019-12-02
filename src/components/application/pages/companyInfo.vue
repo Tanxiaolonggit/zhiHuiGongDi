@@ -265,7 +265,7 @@ export default {
         // 删除企业
         delCorpBasic(text,record){
             this.$confirm({
-                title: '您确定要删除该企业吗？?',
+                title: '您确定要删除该企业吗？',
                 okText: '确定',
                 okType: 'danger',
                 cancelText: '取消',

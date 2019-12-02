@@ -16,7 +16,7 @@
                 </template>
                 <template slot="supplierSubType" slot-scope="text">
                     <span>{{supplierType(text)}}</span>
-                </template>
+                </template> 
                 <template slot="caozuo" slot-scope="text,record ">
                     <a @click="setSupplierButton(text,record)">操作</a>
                     <a @click="delSupplierButton(text,record)" style="margin-left:5px;color:#f22a32;">删除</a>
@@ -265,6 +265,7 @@ export default {
             this.show_searchData.supplierSubType=1;
             this.searchData.corpName='';
             this.searchData.legalMan='';
+            this.searchData.supplierSubType=1;
             this.pageNum=1;
             this.getCorpBasicInfoList();
         },
@@ -300,7 +301,7 @@ export default {
         // 删除企业
         delSupplierButton(text,record){
             this.$confirm({
-                title: '您确定要删除该企业吗？?',
+                title: '您确定要删除该供应商吗？',
                 okText: '确定',
                 okType: 'danger',
                 cancelText: '取消',
