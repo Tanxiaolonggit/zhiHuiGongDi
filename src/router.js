@@ -76,6 +76,18 @@ export default new Router({
               path: "/webContent/application/supplier",
               name:'supplier',
               component: resolve => require(['./components/application/pages/supplier'], resolve)
+            },
+            // 混凝土
+            {
+              path: "/webContent/application/concrete",
+              name:'concrete',
+              component: resolve => require(['./components/application/pages/concrete'], resolve)
+            },
+            // 检验检测
+            {
+              path: "/webContent/application/inspection",
+              name:'inspection',
+              component: resolve => require(['./components/application/pages/inspection'], resolve)
             }
           ]
         },

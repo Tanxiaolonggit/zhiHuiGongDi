@@ -45,3 +45,7 @@
     box-sizing: border-box;
     width: 100%;
 }
+/* 供应商页 项目列表表格样式 */
+.projectInfo .corpBasicDetail .cont section .ant-table-align-center{
+    padding: 0;
+}

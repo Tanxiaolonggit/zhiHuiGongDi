@@ -1,5 +1,5 @@
 <template>
-    <div class="projectInfo">
+    <div class="companyInfo">
         <a-breadcrumb>
             <a-breadcrumb-item>基本档案</a-breadcrumb-item>
             <a-breadcrumb-item>企业档案</a-breadcrumb-item>
@@ -214,7 +214,7 @@ export default {
         // 上一页下一页
         preNextPage(e){
             this.pageNum=e
-            this.getProjectList()
+            this.getCorpBasicInfoList()
         },
         // 查询企业
         reSearch(){
@@ -284,7 +284,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-    .projectInfo{
+    .companyInfo{
         position: relative;
         .buttons{
             text-align: right;

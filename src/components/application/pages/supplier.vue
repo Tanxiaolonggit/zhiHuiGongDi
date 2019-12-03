@@ -27,10 +27,11 @@
         <!-- 查询模态框 -->
         <a-modal title="查询" v-if='visible1' v-model="visible1" @ok="reSearch">
             <div style="display:flex;align-items: center;width:80%;margin:0 auto;"><span>名称：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.corpName"></div>
-            <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>法人：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.legalMan"></div>
+            <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>法人：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.linkMan"></div>
             <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;">
                 <span>供应商类型：</span>
                 <a-select style="flex:1;" :defaultValue='show_searchData.supplierSubType' @change="selectSupplierSubType">
+                    <a-select-option value="1">所有</a-select-option>
                     <a-select-option value="11">混凝土供应商</a-select-option>
                     <a-select-option value="12">木材供应商</a-select-option>
                     <a-select-option value="13">钢筋供应商</a-select-option>
@@ -101,15 +102,31 @@
         <div v-if='corpBasicDetail' class="corpBasicDetail">
             <div @click="corpBasicDetail=null" class="bac"></div>
             <div class="cont">
-                <div class="block">
-                    <div><span>供应商名称：</span><span>{{corpBasicDetail.corpName}}</span></div>
-                    <div><span>联系人：</span><span>{{corpBasicDetail.linkMan}}</span></div>
-                    <div><span>联系电话：</span><span>{{corpBasicDetail.linkPhone}}</span></div>
+                <div class="contDetail">
+                    <div class="block">
+                        <div><span>供应商名称：</span><span>{{corpBasicDetail.corpName}}</span></div>
+                        <div><span>联系人：</span><span>{{corpBasicDetail.linkMan}}</span></div>
+                        <div><span>联系电话：</span><span>{{corpBasicDetail.linkPhone}}</span></div>
+                    </div>
+                    <div class="block">
+                        <div><span>社会统一信用代码：</span><span>{{corpBasicDetail.corpCode}}</span></div>
+                        <div><span>地址：</span><span>{{corpBasicDetail.address}}</span></div>
+                    </div>
                 </div>
-                <div class="block">
-                    <div><span>社会统一信用代码：</span><span>{{corpBasicDetail.corpCode}}</span></div>
-                    <div><span>地址：</span><span>{{corpBasicDetail.address}}</span></div>
-                </div>
+                <section>
+                    <div class="moretitle">
+                        <span>相关项目</span>
+                        <a-button type="primary">新增项目</a-button>
+                    </div>
+                    <div class="moretable">
+                        <a-table :columns="columns2" :dataSource="list2" :pagination='false'  bordered>
+                            <template slot="caozuo" slot-scope="text,record ">
+                                <a>选择</a>
+                            </template>
+                        </a-table>
+                        <a-pagination showQuickJumper class="pagination" @change='preNextPage2' :defaultCurrent="pageNum2" :defaultPageSize="pageSize2" :total="total2" /> 
+                    </div>
+                </section>
             </div>
         </div>
     </div>
@@ -119,6 +136,8 @@ import {supplierName} from '../../../utils/dataDictionary.js'
 export default {
     data(){
         return{
+            // 供应商id
+            corpId:'',
             type:'',
             columns : [{
                 title: '名称',
@@ -148,17 +167,37 @@ export default {
             pageNum:1,
             pageSize:10,
             total:0,
+            columns2 : [{
+                title: '编号',
+                align: 'center',
+                dataIndex: 'corpId',
+            },{
+                title: '项目名称',
+                align: 'center',
+                dataIndex: 'projectName',
+            },{
+                title: '操作',
+                align: 'center',
+                dataIndex: 'caozuo',
+            }],
+            // 供应商已经绑定的项目列表
+            list2:[],
+            pageNum2:1,
+            pageSize2:10,
+            total2:0,
             // 查询模态框显示隐藏
             visible1:false,
             show_searchData:{
                 corpName:'',
-                legalMan:'',
-                supplierSubType:1
+                linkMan:'',
+                // 默认为1 查询供应商
+                supplierSubType:'1'
             },
             searchData:{
                 corpName:'',
-                legalMan:'',
-                supplierSubType:1
+                linkMan:'',
+                // 默认为1 查询供应商
+                supplierSubType:'1'
             },
             // 新增界面显示隐藏
             visible2:false,
@@ -202,7 +241,17 @@ export default {
             }
         },
         "visible2":function(n,o) {
-            if(!n) this.supplierData={};
+            if(!n){
+                // 清除供应商详情
+                this.supplierData={};
+                // 清除供应商id
+                this.corpId=''
+                // 清空相关项目列表
+                this.list2=[]
+                // 重置基本数据
+                this.pageNum2=1
+                this.pageSize2=10
+            } 
         }
     },
     methods:{
@@ -226,6 +275,18 @@ export default {
                 this.getCorpBasicInfoList();
             })
         },
+        // 查询供应商已绑定的项目
+        getProjectSupplierSList(){
+            this.$axios.post('/t_dz_projectsupplier/selectProjectSupplier',{
+                pageNum:this.pageNum2,
+                pageSize:this.pageSize2,
+                corpId:this.corpId
+            }).then((res)=>{
+                this.list2=res.data
+                this.total2=res.count
+                console.log(res)
+            })
+        },
         // 添加或修改企业
         addSetCorpBasic(){
             let url=this.type=='add'?'/t_dz_corpbasicinfo/insertCorpBasicInfo':'/t_dz_corpbasicinfo/updateCorpBasicInfo'
@@ -240,9 +301,13 @@ export default {
         // 上一页下一页
         preNextPage(e){
             this.pageNum=e
-            this.getProjectList()
+            this.getCorpBasicInfoList()
         },
-        // 查询供应商类型
+        preNextPage2(e){
+            this.pageNum2=e
+            this.getProjectSupplierSList()
+        },
+        // 设置查询供应商类型
         selectSupplierSubType(e){
             this.show_searchData.supplierSubType=e
         },
@@ -286,6 +351,8 @@ export default {
         //查看企业档案详情
         seeDetail(record){
             this.corpBasicDetail=JSON.parse(JSON.stringify(record))
+            this.corpId=record.corpId
+            this.getProjectSupplierSList()
         },
         // 供应商类型
         supplierType(num){
@@ -312,7 +379,7 @@ export default {
                 },
             })
         },
-        // 企业详情多选框
+        // 供应商详情多选框
         supplierSelect(e,type){
             this.supplierData[type]=e
         }
@@ -434,26 +501,50 @@ export default {
                 background: rgba(0, 0, 0, 0.5);
             }
             .cont{
-                width:60%;
+                width:40%;
                 position: absolute;
                 left: 50%;
-                top: 30%;
+                top: 20%;
                 transform: translateX(-50%);
                 z-index: 2;
                 background:#fff;
-                display: flex;
-                justify-content: space-between;
-                padding: 20px;
                 color: #333;
-                .block{
-                    div{
+                padding: 20px 0;
+                .contDetail{
+                    padding: 0 20px;
+                    display: flex;
+                    justify-content: space-between;
+                    .block{
+                        div{
+                            margin-bottom: 10px;
+                            span{
+                                display: inline-block;
+                            }
+                        }      
+                    }
+                }
+                section{
+                    padding: 20px 20px 0;
+                    border-top: 10px solid #f0f2f5;
+                    .moretitle{
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
                         margin-bottom: 10px;
                         span{
-                            display: inline-block;
+                            font-size: 17px;
+                            color: #1890ff;
                         }
-                    }      
+                    }
+                    .moretable{
+                        .pagination{
+                            text-align: right;
+                            margin-top: 10px;
+                        }
+                    }
                 }
             }
         }
+        
     }
 </style>
