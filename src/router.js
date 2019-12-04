@@ -88,7 +88,13 @@ export default new Router({
               path: "/webContent/application/inspection",
               name:'inspection',
               component: resolve => require(['./components/application/pages/inspection'], resolve)
-            }
+            },
+            // 起重设备equipment
+            {
+              path: "/webContent/application/equipment",
+              name:'equipment',
+              component: resolve => require(['./components/application/pages/equipment'], resolve)
+            },
           ]
         },
 

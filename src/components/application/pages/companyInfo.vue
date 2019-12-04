@@ -71,20 +71,20 @@
                 </div>
             </div>
         </div>
-        <div v-if='corpBasicDetail' class="corpBasicDetail">
-            <div @click="corpBasicDetail=null" class="bac"></div>
+        <div v-if='companyInfoDetail' class="companyInfoDetail">
+            <div @click="companyInfoDetail=null" class="bac"></div>
             <div class="cont">
                 <div class="block">
-                    <div><span>企业名称：</span><span>{{corpBasicDetail.corpName}}</span></div>
-                    <div><span>企业注册类型：</span><span>{{corpBasicDetail.corpType}}</span></div>
-                    <div><span>法定代表人姓名：</span><span>{{corpBasicDetail.legalMan}}</span></div>
-                    <div><span>联系人姓名：</span><span>{{corpBasicDetail.linkMan}}</span></div>
+                    <div><span>企业名称：</span><span>{{companyInfoDetail.corpName}}</span></div>
+                    <div><span>企业注册类型：</span><span>{{companyInfoDetail.corpType}}</span></div>
+                    <div><span>法定代表人姓名：</span><span>{{companyInfoDetail.legalMan}}</span></div>
+                    <div><span>联系人姓名：</span><span>{{companyInfoDetail.linkMan}}</span></div>
                 </div>
                 <div class="block">
-                    <div><span>社会统一信用代码：</span><span>{{corpBasicDetail.corpCode}}</span></div>
-                    <div><span>企业经营地址：</span><span>{{corpBasicDetail.address}}</span></div>
-                    <div><span>邮政编码：</span><span>{{corpBasicDetail.zipCode}}</span></div>
-                    <div><span>联系人电话：</span><span>{{corpBasicDetail.linkPhone}}</span></div>
+                    <div><span>社会统一信用代码：</span><span>{{companyInfoDetail.corpCode}}</span></div>
+                    <div><span>企业经营地址：</span><span>{{companyInfoDetail.address}}</span></div>
+                    <div><span>邮政编码：</span><span>{{companyInfoDetail.zipCode}}</span></div>
+                    <div><span>联系人电话：</span><span>{{companyInfoDetail.linkPhone}}</span></div>
                 </div>
             </div>
         </div>
@@ -163,7 +163,7 @@ export default {
                 linkPhone:'',//联系人电话
                 webSite:'',//企业网址
             },
-            corpBasicDetail:null
+            companyInfoDetail:null
         }
     },
     mounted(){
@@ -253,7 +253,7 @@ export default {
         },
         //查看企业档案详情
         seeDetail(record){
-            this.corpBasicDetail=JSON.parse(JSON.stringify(record))
+            this.companyInfoDetail=JSON.parse(JSON.stringify(record))
         },
         // 修改&操作企业
         setCorpBasicButton(text,record){
@@ -382,7 +382,7 @@ export default {
                 }
             }
         }
-        .corpBasicDetail{
+        .companyInfoDetail{
             position: absolute;
             width: 100%;
             height: 100%;

@@ -15,7 +15,7 @@
                         <a-menu-item key='2' v-if='funcList.basicBlock.supplierInfo'><router-link :to='{name:"supplier"}'>供应商档案</router-link></a-menu-item>            
                         <a-menu-item key='3' v-if='funcList.basicBlock.checkInfo'><router-link :to='{name:"inspection"}'>检验检测对照管理</router-link></a-menu-item>
                         <a-menu-item key='4' v-if='funcList.basicBlock.concrete'><router-link :to='{name:"concrete"}'>混凝土项目对照管理</router-link></a-menu-item>
-                        <a-menu-item key='5' v-if='funcList.basicBlock.bigDeviceInfo'>起重设备档案</a-menu-item>
+                        <a-menu-item key='5' v-if='funcList.basicBlock.bigDeviceInfo'><router-link :to='{name:"equipment"}'>起重设备档案</router-link></a-menu-item>
                         <a-menu-item key='6' v-if='funcList.basicBlock.specialPersonInfo'>特种设备人员档案</a-menu-item>
                     </a-sub-menu>
                     <!-- 原本是三级 改为二级 标签页嵌套 -->

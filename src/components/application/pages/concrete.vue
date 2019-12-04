@@ -212,42 +212,5 @@ export default {
                 }
             }
         }
-        .corpBasicDetail{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            left: 0;
-            top: 0;
-            .bac{
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                left: 0;
-                top: 0;
-                z-index: 1;
-                background: rgba(0, 0, 0, 0.5);
-            }
-            .cont{
-                width:60%;
-                position: absolute;
-                left: 50%;
-                top: 30%;
-                transform: translateX(-50%);
-                z-index: 2;
-                background:#fff;
-                display: flex;
-                justify-content: space-between;
-                padding: 20px;
-                color: #333;
-                .block{
-                    div{
-                        margin-bottom: 10px;
-                        span{
-                            display: inline-block;
-                        }
-                    }      
-                }
-            }
-        }
     }
 </style>
