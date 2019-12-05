@@ -11,6 +11,9 @@
         </div>
         <div class="tables">
             <a-table :columns="columns" :dataSource="list" :pagination='false'  bordered>
+                <template slot="deviceType" slot-scope="text">
+                    <span>{{equipmentName(text)}}</span>
+                </template>
                 <template slot="caozuo" slot-scope="text,record ">
                     <a @click="setEquipmentButton(text,record)">操作</a>
                     <a @click="delEquipmentButton(text,record)" style="margin-left:5px;color:#f22a32;">删除</a>
@@ -22,13 +25,13 @@
         <a-modal title="查询" v-if='visible1' v-model="visible1" @ok="reSearch">
             <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;">
                 <span>设备类型：</span>
-                <a-select :defaultValue='show_searchData.deviceType' @change="selectEquipmentType">
+                <a-select style="flex:1;" :defaultValue='show_searchData.deviceType' @change="selectEquipmentType">
                     <a-select-option value="0">起重机</a-select-option>
                     <a-select-option value="1">升降机</a-select-option>
                     <a-select-option value="2">其他</a-select-option>
                 </a-select>
             </div>
-            <div style="display:flex;align-items: center;width:80%;margin:0 auto;"><span>设备编号：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.recordNum"></div>
+            <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>设备编号：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.recordNum"></div>
         </a-modal>
         <!-- 新增&修改项目界面 -->
         <div class="addAndSet" v-if='visible2'>
@@ -36,8 +39,7 @@
             <div class="inputCont">
                 <div class="top">
                     <section>
-                        <div><span>设备编号：</span><input v-model="equipmentData.deviceId" type="text"></div>
-                        <!-- <div><span>工商营业执照注册号：</span><input v-model="equipmentData.licenseNum" type="text"></div> -->
+                        <!-- <div><span>设备编号：</span><input v-model="equipmentData.recordNum" type="text"></div> -->
                         <div>
                             <span>机械类型：</span>
                             <a-select style="width:100%;" :defaultValue="equipmentData.deviceType" @change="equipmentSelect($event,'deviceType')">
@@ -50,7 +52,8 @@
                         <div><span>制造许可证编号：</span><input v-model="equipmentData.ManuLicense" type="text"></div>
                         <div>
                             <span>项目名称：</span>
-                            <a-select :defaultValue="equipmentData.projectId" @change="equipmentSelect($event,'projectId')">
+                            <a-select  @change="equipmentSelect($event,'projectId')">
+                                <a-select-option :value="item.projectId" v-for='(item,index) in projectList' :key="'pro'+index">{{item.projectName}}</a-select-option> 
                             </a-select>
                         </div>
                     </section>
@@ -91,19 +94,20 @@
     </div>
 </template>
 <script>
-import {supplierName} from '../../../utils/dataDictionary.js'
+import {supplierName,equipments} from '../../../utils/dataDictionary.js'
 export default {
     data(){
         return{
             type:'',
             columns : [{
-                title: '设备编号',
+                title: '备案编号',
                 align: 'center',
                 dataIndex: 'recordNum',
             },{
                 title: '类型',
                 align: 'center',
                 dataIndex: 'deviceType',
+                scopedSlots: { customRender: 'deviceType' },  
             },{
                 title: '型号',
                 align: 'center',
@@ -112,6 +116,10 @@ export default {
                 title:'产权单位',
                 align: 'center',
                 dataIndex:"propertyRight",
+            },{
+                title:'项目名称',
+                align: 'center',
+                dataIndex:"projectName", 
             },{
                 title:'制造厂商',
                 align: 'center',
@@ -142,7 +150,7 @@ export default {
             visible2:false,
             // 新增&修改项目信息
             equipmentData:{
-                deviceId:'',//设备编号
+                // deviceId:'',//设备编号
                 deviceType:'',//设备类型
                 specifications:'',//规格型号
                 ManuLicense:'',//制造许可证编号
@@ -161,7 +169,9 @@ export default {
                 recordDate:'',//备案日期
                 enterDate:'',//进场日期
                 installDate:'',//安装日期
-            }
+            },
+            // 项目列表 用于新增设备绑定
+            projectList:[]
         }
     },
     mounted(){
@@ -177,7 +187,9 @@ export default {
             if(!n){
                 // 清除供应商详情
                 this.equipmentData={};
-            } 
+            }else{
+                this.getProjectList();
+            }
         }
     },
     methods:{
@@ -204,7 +216,7 @@ export default {
         },
         // 添加或修改企业
         addSetEquipment(){
-            let url=this.type=='add'?'/t_dz_corpbasicinfo/insertCorpBasicInfo':'/t_dz_corpbasicinfo/updateCorpBasicInfo'
+            let url=this.type=='add'?'/t_dz_device/insertDevice':'/t_dz_device/updateDevice'
             this.$axios.post(url,{
                 data:JSON.stringify(this.equipmentData)
             }).then((res)=>{
@@ -285,6 +297,16 @@ export default {
         // 大型设备详情多选框
         equipmentSelect(e,type){
             this.equipmentData[type]=e
+        },
+        // 显示设备类型
+        equipmentName(num){
+            return equipments(num)
+        },
+        // 获取项目列表
+        getProjectList(){
+            this.$axios.post('/t_dz_project/selectProjectAllNames').then((res)=>{
+                this.projectList=res.data
+            })
         }
     }
 }

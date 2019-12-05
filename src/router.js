@@ -95,6 +95,12 @@ export default new Router({
               name:'equipment',
               component: resolve => require(['./components/application/pages/equipment'], resolve)
             },
+            // 特种设备人员specialPersonnel
+            {
+              path: "/webContent/application/specialPersonnel",
+              name:'specialPersonnel',
+              component: resolve => require(['./components/application/pages/specialPersonnel'], resolve)
+            }
           ]
         },
 

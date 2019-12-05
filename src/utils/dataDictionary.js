@@ -30,7 +30,17 @@ function supplierName(num){
             return '其它供应商'
     }
 }
+// 大型设备数据字典
+function equipments(num){
+    switch(Number(num)){
+        case 0:
+            return '起重机'
+        case 1:
+            return '升降机'
+    }
+}
 export{
     projectStatus,
-    supplierName
+    supplierName,
+    equipments
 }
