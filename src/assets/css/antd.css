@@ -49,3 +49,7 @@
 .projectInfo .corpBasicDetail .cont section .ant-table-align-center{
     padding: 0;
 }
+/* 特种人员页 表格地址列样式 */
+.specialPersonnel .ant-table-tbody .ant-table-row td:last-of-type{
+    width: 20%;
+}

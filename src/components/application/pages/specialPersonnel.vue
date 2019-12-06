@@ -9,7 +9,7 @@
             <a-button icon="redo" class="rebutton" @click="redo">刷新</a-button>
         </div>
         <div class="tables">
-            <a-table :columns="columns" :dataSource="list" :pagination='false'  bordered>
+            <a-table :columns="columns" :dataSource="list" :pagination='false'  bordered>    
                 <template slot="phoneNum"  slot-scope="text">
                     <a-tooltip  placement="right" :title="text">
                         <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
@@ -20,19 +20,48 @@
                         <div style="width:100%;white-space:normal;">{{text}}</div>
                     </a-tooltip>   
                 </template>
+                <template slot="certificateSubclass"  slot-scope="text">
+                    <span>{{personType(text)}}</span>
+                </template>
             </a-table>
             <a-pagination showQuickJumper class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" /> 
-        </div> 
+        </div>
         <!-- 查询模态框 -->
         <a-modal title="查询" v-if='visible1' v-model="visible1" @ok="reSearch">
             <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>姓名：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.name"></div>
             <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>电话：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.phoneNum"></div>
             <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;"><span>身份证：</span><input style="flex:1;border:1px solid #d9d9d9;border-radius:4px;box-sizing:border-box;padding:0 11px;height:30px;line-height:30px;" type="text" v-model="show_searchData.idCardNum"></div>
+            <div style="display:flex;align-items: center;width:80%;margin:20px auto 0;">
+                <span>人员类别：</span>
+                <a-select style="flex:1;" :defaultValue='show_searchData.certificateSubclass' @change="selectPersonType">
+                    <a-select-option value="79">建筑电工</a-select-option>                 
+                    <a-select-option value="80">高处作业吊篮安装拆卸工</a-select-option>                 
+                    <a-select-option value="81">塔式起重机司机</a-select-option>             
+                    <a-select-option value="82">施工升降机司机</a-select-option>            
+                    <a-select-option value="83">电焊工</a-select-option>    
+                    <a-select-option value="84">其他</a-select-option>        
+                    <a-select-option value="85">建筑架工</a-select-option>                   
+                    <a-select-option value="86">普通脚手架工</a-select-option>                    
+                    <a-select-option value="87">附着升降脚手架工</a-select-option>                    
+                    <a-select-option value="88">建筑起重信号、司索工</a-select-option>                    
+                    <a-select-option value="89">建筑起重机司机</a-select-option>                    
+                    <a-select-option value="90">物料提升机司机</a-select-option>                    
+                    <a-select-option value="91">门式起重机司机</a-select-option>                    
+                    <a-select-option value="92">桥式起重机司机</a-select-option>                    
+                    <a-select-option value="93">汽车式起重机司机</a-select-option>                    
+                    <a-select-option value="94">建筑起重机械安装拆卸工</a-select-option>
+                    <a-select-option value="95">塔机安（拆）工</a-select-option>
+                    <a-select-option value="96">施工升降机安（拆）工</a-select-option>    
+                    <a-select-option value="97">物料提升机安（拆）工</a-select-option>
+                    <a-select-option value="98">门式起重机安（拆）工</a-select-option>
+                    <a-select-option value="99">桥式起重机安（拆）工</a-select-option>
+                </a-select>
+            </div>
         </a-modal>
     </div>
 </template>
 <script>
-import {supplierName} from '../../../utils/dataDictionary.js'
+import {specialPersonType} from '../../../utils/dataDictionary.js'
 export default {
     data(){
         return{
@@ -65,7 +94,9 @@ export default {
             },{
                 title:"司机类型",
                 align: 'center',
-                dataIndex:"caozuo",
+                dataIndex:"certificateSubclass",
+                scopedSlots: { customRender: 'certificateSubclass' },
+
             },{
                 title:"地址",
                 align: 'center',
@@ -81,12 +112,14 @@ export default {
             show_searchData:{
                 name:'',
                 phoneNum:'',
-                idCardNum:''
+                idCardNum:'',
+                certificateSubclass:''
             },
             searchData:{
                 name:'',
                 phoneNum:'',
-                idCardNum:''
+                idCardNum:'',
+                certificateSubclass:''
             },
         }
     },
@@ -126,6 +159,8 @@ export default {
                 this.$message.warning('请输入电话');
             }else if(this.show_searchData.idCardNum==''){
                 this.$message.warning('请输入身份证号');
+            }else if(this.show_searchData.certificateSubclass=''){
+                this.$message.warning('请选择人员类型');
             }else{
                 this.pageNum=1;
                 this.searchData=JSON.parse(JSON.stringify(this.show_searchData))
@@ -137,11 +172,21 @@ export default {
             this.show_searchData.name='';
             this.show_searchData.phoneNum='';
             this.show_searchData.idCardNum='';
+            this.show_searchData.certificateSubclass='';
             this.searchData.name='';
             this.searchData.phoneNum='';
             this.searchData.idCardNum='';
+            this.searchData.certificateSubclass='';
             this.pageNum=1;
             this.getPersonList();
+        },
+        // 设置查询人员类别
+        selectPersonType(e){
+            this.show_searchData.certificateSubclass=e
+        },
+        // 人员类别数据字典显示
+        personType(num){
+            return specialPersonType(num)
         }
     }
 }

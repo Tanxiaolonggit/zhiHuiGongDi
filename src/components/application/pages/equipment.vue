@@ -94,7 +94,7 @@
     </div>
 </template>
 <script>
-import {supplierName,equipments} from '../../../utils/dataDictionary.js'
+import {equipments} from '../../../utils/dataDictionary.js'
 export default {
     data(){
         return{
@@ -268,10 +268,6 @@ export default {
         //确认提交信息
         queren(){
             this.addSetEquipment();
-        },
-        // 供应商类型
-        supplierType(num){
-            return supplierName(num)
         },
         // 修改&操作大型设备
         setEquipmentButton(text,record){

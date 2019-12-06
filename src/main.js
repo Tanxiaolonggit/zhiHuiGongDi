@@ -13,6 +13,7 @@ import '../src/assets/css/antd.css';
 // import 'moment/locale/zh-cn';
 // moment.locale('zh-cn')
 axios.defaults.baseURL='http://47.98.254.131:8678';
+// axios.defaults.baseURL = '/api'
 Vue.prototype.$axios = axios2;//把axios挂载到vue上
 Vue.prototype.$echarts = echarts;
 Vue.config.productionTip = false;
