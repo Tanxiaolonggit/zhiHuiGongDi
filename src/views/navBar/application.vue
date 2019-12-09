@@ -21,7 +21,7 @@
                     <!-- 原本是三级 改为二级 标签页嵌套 -->
                     <a-sub-menu key="sub2">
                         <div slot="title">项目报表</div>
-                        <a-menu-item key='7' v-if='JSON.stringify(funcList.projectBlock.person)!="{}"'>实名制管理报表</a-menu-item>
+                        <a-menu-item key='7' v-if='JSON.stringify(funcList.projectBlock.person)!="{}"'><router-link :to='{name:"realNameReport"}'>实名制管理报表</router-link></a-menu-item>
                         <a-menu-item key='8' v-if='JSON.stringify(funcList.projectBlock.salary)!="{}"'>民工薪资专户</a-menu-item>
                         <a-menu-item key='9' v-if='JSON.stringify(funcList.projectBlock.supervisorReport)!="{}"'>监理报告</a-menu-item>
                         <a-menu-item key='10' v-if='JSON.stringify(funcList.projectBlock.devices)!="{}"'>设备统计</a-menu-item>

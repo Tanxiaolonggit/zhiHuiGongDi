@@ -53,3 +53,11 @@
 .specialPersonnel .ant-table-tbody .ant-table-row td:last-of-type{
     width: 20%;
 }
+/* 应用 实名制页面按类别查找 */
+.realName .table1 .ant-table-tbody .ant-table-row td:nth-of-type(6){
+    width:10%;
+}   
+/* 应用 实名制页面按岗位查找 */
+.realName .table2 .ant-table-tbody .ant-table-row td:nth-of-type(7){ 
+    width:20%;
+}

@@ -178,7 +178,7 @@
     </div>
 </template>
 <script>
-import {projectStatus} from '../../../utils/dataDictionary.js'
+import {projectStatus} from '../../../../utils/dataDictionary.js'
 export default {
     data(){
         return{

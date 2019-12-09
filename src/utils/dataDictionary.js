@@ -86,9 +86,41 @@ function specialPersonType(num) {
             return '桥式起重机安（拆）工'
     }
 }
+// 岗位数据字典
+function technicalTypes(num) {
+    switch (Number(num)) {
+        case 1:
+            return '施工员'
+        case 2:
+            return '质量员'
+        case 3:
+            return '安全员'
+        case 4:
+            return '标准员'
+        case 5:
+            return '材料员'
+        case 6:
+            return '机械员'
+        case 7:
+            return '劳务员'
+        case 8:
+            return '资料员'
+        case 9:
+            return '甲方代表'
+        case 10:
+            return '乙方代表'
+        case 11:
+            return '第三方代表'
+        case 12:
+            return '施工单位项目负责人'
+        case 13:
+            return '其他'
+    }
+}
 export {
     projectStatus,
     supplierName,
     equipments,
-    specialPersonType
+    specialPersonType,
+    technicalTypes
 }

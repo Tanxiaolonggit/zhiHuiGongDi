@@ -94,7 +94,7 @@
     </div>
 </template>
 <script>
-import {equipments} from '../../../utils/dataDictionary.js'
+import {equipments} from '../../../../utils/dataDictionary.js'
 export default {
     data(){
         return{

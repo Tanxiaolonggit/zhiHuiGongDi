@@ -61,7 +61,7 @@
     </div>
 </template>
 <script>
-import {specialPersonType} from '../../../utils/dataDictionary.js'
+import {specialPersonType} from '../../../../utils/dataDictionary.js'
 export default {
     data(){
         return{

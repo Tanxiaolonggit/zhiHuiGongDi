@@ -132,7 +132,7 @@
     </div>
 </template>
 <script>
-import {supplierName} from '../../../utils/dataDictionary.js'
+import {supplierName} from '../../../../utils/dataDictionary.js'
 export default {
     data(){
         return{

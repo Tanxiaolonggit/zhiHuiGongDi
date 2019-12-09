@@ -63,43 +63,49 @@ export default new Router({
             {
               path: "/webContent/application/projectInfo",
               name:'projectInfo',
-              component: resolve => require(['./components/application/pages/projectInfo'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/projectInfo'], resolve)
             },
             // 企业档案
             {             
               path: "/webContent/application/companyInfo",
               name:'companyInfo',
-              component: resolve => require(['./components/application/pages/companyInfo'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/companyInfo'], resolve)
             },
             // 供应商档案
             {             
               path: "/webContent/application/supplier",
               name:'supplier',
-              component: resolve => require(['./components/application/pages/supplier'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/supplier'], resolve)
             },
             // 混凝土
             {
               path: "/webContent/application/concrete",
               name:'concrete',
-              component: resolve => require(['./components/application/pages/concrete'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/concrete'], resolve)
             },
             // 检验检测
             {
               path: "/webContent/application/inspection",
               name:'inspection',
-              component: resolve => require(['./components/application/pages/inspection'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/inspection'], resolve)
             },
             // 起重设备equipment
             {
               path: "/webContent/application/equipment",
               name:'equipment',
-              component: resolve => require(['./components/application/pages/equipment'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/equipment'], resolve)
             },
             // 特种设备人员specialPersonnel
             {
               path: "/webContent/application/specialPersonnel",
               name:'specialPersonnel',
-              component: resolve => require(['./components/application/pages/specialPersonnel'], resolve)
+              component: resolve => require(['./components/application/pages/basicFiles/specialPersonnel'], resolve)
+            },
+            // 实名制报表
+            {
+              path: "/webContent/application/realNameReport",
+              name:'realNameReport',
+              component: resolve => require(['./components/application/pages/projectReport/realNameReport'], resolve)
             }
           ]
         },
