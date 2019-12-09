@@ -5,8 +5,8 @@
             <div class="valueInput">
                 <a-input-group compact class="inputBox">
                     <a-select defaultValue="通知公告" @change="selectChange">
-                        <a-select-option value="0">通知公告</a-select-option>
-                        <a-select-option value="1">相关文档</a-select-option>
+                        <a-select-option :value="4">通知公告</a-select-option>
+                        <a-select-option :value="2">相关文档</a-select-option>
                     </a-select>
                     <a-input-search placeholder="请输入关键字" @search="onSearch" v-model="searchCont" @input="docSearch" enterButton />
                     <div></div>
@@ -19,22 +19,15 @@
         <div class="notice_cont">
             <div class="notice_cont_left">
                 <span @click='toIndex()' style="color:#fff;">返回首页</span>
-                <span @click="checkType(0)" :style="{color:type==0?'#333':'#fff',background:type==0?'#fff':'#1890ff'}">通知公告</span>
-                <span @click="checkType(1)" :style="{color:type==1?'#333':'#fff',background:type==1?'#fff':'#1890ff'}">相关文档</span>            
+                <span @click="checkType(4)" :style="{color:noticeType==4?'#333':'#fff',background:noticeType==4?'#fff':'#1890ff'}">通知公告</span>
+                <span @click="checkType(2)" :style="{color:noticeType==2?'#333':'#fff',background:noticeType==2?'#fff':'#1890ff'}">相关文档</span>            
             </div>
             <div class="notice_cont_right">
-                <div v-if='type==0'>
+                <div>
                     <div class="forBlock" v-for='(item,index) in docList' :key='"doc"+index'>
                         <a-icon type="caret-right" />
                         <span>{{item.noticeName}}</span>
                         <span>{{item.noticeDate}}</span>
-                    </div>
-                </div>
-                <div v-else>
-                    <div class="forBlock" v-for='(item,index) in docList' :key='"doc"+index'>
-                        <a-icon type="caret-right" />
-                        <span>{{item.helpDocName}}</span>
-                        <span>{{item.helpDocDate}}</span>
                     </div>
                 </div>
                 <div class="pagination">
@@ -51,9 +44,9 @@ export default {
     data(){
         return{
             // 文档类型
-            type:0,
+            noticeType:4,
             // 下拉选择的类型
-            selectType:0,
+            selectType:4,
             pageNum:1,
             pageSize:10,
             docList:[],
@@ -63,15 +56,9 @@ export default {
         }
     },
     watch:{
-        'type':function(n,o){
+        'noticeType':function(n,o){
             this.pageNum=1;
-            switch(parseInt(n)){
-                case 0:
-                    this.getInsertNotice();
-                    break;
-                case 1:
-                    this.getHelpDoc();
-            }
+            this.getInsertNotice();
         }
     },
     mounted(){
@@ -80,7 +67,7 @@ export default {
     methods:{
         // 文件类型改变
         selectChange(e){
-            this.type=e
+            this.noticeType=e
             // 保存下拉选择的类型
             this.selectType=e  
         },
@@ -89,41 +76,36 @@ export default {
         },
         // 切换文件类型
         checkType(i){
-            this.type=i
+            this.noticeType=i
         },
         // input输入事件
         docSearch(e){
-            this.getSearchDoc();
-            let input=document.getElementsByClassName('ant-input')[0]
-            console.log(input.offsetWidth)
+            if(this.searchCont){
+                this.getSearchDoc();
+            }
         },
-        // 获取通知公告
+        // 获取通知公告(按类型)
         getInsertNotice(){
-            this.$axios.post('/t_dz_notice/selectNoticeAll',{
+            this.$axios.post('/t_dz_notice/selectNotice',{
                 pageNum:this.pageNum,
-                pageSize:this.pageSize
+                pageSize:this.pageSize,
+                noticeType:this.noticeType
             }).then((res)=>{
-                this.docList=[...res.data]
-                this.total=res.count
-            })
-        },
-        // 获取帮助文档
-        getHelpDoc(){
-            this.$axios.post('/t_dz_helpdoc/selectHelpDocAll',{
-                pageNum:this.pageNum,
-                pageSize:this.pageSize
-            }).then((res)=>{
-                this.docList=[...res.data]
+                if(this.pageNum=1){
+                    this.docList=res.data
+                }else{
+                    this.docList=[...res.data]
+                }
                 this.total=res.count
             })
         },
         //获取查找文档
         getSearchDoc(){
-            this.$axios.post('/search/selectFiles',{
+            this.$axios.post('/t_dz_notice/selectFiles',{
                 pageSize:1,
                 pageNum:5,
-                fileName:this.searchCont,
-                fileType:this.selectType
+                noticeName:this.searchCont,
+                noticeType:this.selectType
             }).then((res)=>{
                 console.log(res)
             })
@@ -131,13 +113,7 @@ export default {
         // 下一页
         preNextPage(e){
             this.pageNum=e
-            switch(this.type){
-                case 0:
-                    this.getInsertNotice();
-                    break;
-                case 1:
-                    this.getHelpDoc();
-            }
+            this.getInsertNotice();
         },
         // 返回首页
         toIndex(){
@@ -194,6 +170,7 @@ export default {
                     text-align: center;
                     padding: 15% 0;
                     transition: 0.2s;
+                    cursor: pointer;
                 }
             }
             .notice_cont_right{

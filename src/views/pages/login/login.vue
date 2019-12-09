@@ -38,9 +38,7 @@ export default {
         // 登陆
         login:throttle(function(){
             if(this.userName==''){
-                this.$message.warning({
-                    'content':'请输入用户名',
-                });
+                this.$message.warning('请输入用户名');
             }else if(this.userPsw==''){
                 this.$message.warning('请输入密码');
             }else{
