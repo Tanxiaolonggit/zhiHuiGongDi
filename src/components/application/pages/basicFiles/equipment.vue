@@ -95,6 +95,7 @@
 </template>
 <script>
 import {equipments} from '../../../../utils/dataDictionary.js'
+import {pullProjectLists} from '../../../../utils/pubFunc.js'
 export default {
     data(){
         return{
@@ -188,7 +189,10 @@ export default {
                 // 清除供应商详情
                 this.equipmentData={};
             }else{
-                this.getProjectList();
+                // 拉取项目列表
+                pullProjectLists(this).then((res)=>{
+                    this.projectList=res
+                })
             }
         }
     },
@@ -297,12 +301,6 @@ export default {
         // 显示设备类型
         equipmentName(num){
             return equipments(num)
-        },
-        // 获取项目列表
-        getProjectList(){
-            this.$axios.post('/t_dz_project/selectProjectAllNames').then((res)=>{
-                this.projectList=res.data
-            })
         }
     }
 }

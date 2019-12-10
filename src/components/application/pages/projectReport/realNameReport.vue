@@ -3,6 +3,11 @@
         <a-tabs :defaultActiveKey="type" @change="pageChage">
             <!-- 按类别 -->
             <a-tab-pane class="page" tab="按类别" :key="1">
+                <div class="buttons">
+                    <a-button>查询</a-button>
+                    <a-button style="margin:0 10px;" type="primary">打印</a-button>
+                    <a-button>导出</a-button> 
+                </div>
                 <a-table class="table1" :columns="columns" :dataSource="list" :pagination='false'  bordered>   
                     <template slot="projectName"  slot-scope="text">
                         <a-tooltip  placement="right" :title="text">
@@ -37,6 +42,11 @@
             </a-tab-pane>
             <!-- 按岗位 -->
             <a-tab-pane class="page" tab="按岗位" :key="2">
+                <div class="buttons">
+                    <a-button>查询</a-button>
+                    <a-button style="margin:0 10px;" type="primary">打印</a-button>
+                    <a-button>导出</a-button> 
+                </div>
                 <a-table class="table2" :columns="columns2" :dataSource="list" :pagination='false'  bordered>   
                     <template slot="projectName"  slot-scope="text">
                         <a-tooltip  placement="right" :title="text">
@@ -74,6 +84,11 @@
             </a-tab-pane>
             <!-- 按工种 -->
             <a-tab-pane class="page" tab="按工种" :key="3">
+                <div class="buttons">
+                    <a-button>查询</a-button>
+                    <a-button style="margin:0 10px;" type="primary">打印</a-button>
+                    <a-button>导出</a-button> 
+                </div>
                 <a-table class="table2" :columns="columns3" :dataSource="list" :pagination='false'  bordered>   
                     <template slot="projectName"  slot-scope="text">
                         <a-tooltip  placement="right" :title="text">
@@ -314,6 +329,10 @@ export default {
         overflow-y: scroll;
         .page{
             padding: 10px;
+            .buttons{
+                text-align: right;
+                margin-bottom: 20px;
+            }
         }
         .status{
             font-size: 10px!important;
