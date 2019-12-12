@@ -61,3 +61,7 @@
 .realName .table2 .ant-table-tbody .ant-table-row td:nth-of-type(7){ 
     width:20%;
 }
+/* 应用设备统计 表格项目状态 */
+.equipmentStatistics .table1 .ant-table-tbody .ant-table-row td:nth-of-type(6){ 
+    width:10%;
+}

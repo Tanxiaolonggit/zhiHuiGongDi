@@ -106,7 +106,13 @@ export default new Router({
               path: "/webContent/application/realNameReport",
               name:'realNameReport',
               component: resolve => require(['./components/application/pages/projectReport/realNameReport'], resolve)
-            }
+            },
+            // 设备统计报表equipmentStatistics
+            {
+              path: "/webContent/application/equipmentStatistics",
+              name:'equipmentStatistics',
+              component: resolve => require(['./components/application/pages/projectReport/equipmentStatistics'], resolve)
+            },
           ]
         },
 

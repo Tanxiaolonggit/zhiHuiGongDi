@@ -1,10 +1,15 @@
 <template>
     <div class="realName">
+        <a-breadcrumb>
+            <a-breadcrumb-item>项目报表</a-breadcrumb-item>
+            <a-breadcrumb-item>实名制管理报表</a-breadcrumb-item>
+        </a-breadcrumb>
         <a-tabs :defaultActiveKey="type" @change="pageChage">
             <!-- 按类别 -->
             <a-tab-pane class="page" tab="按类别" :key="1">
                 <div class="buttons">
-                    <a-button>查询</a-button>
+                    <a-button @click="searchSwitch=true">查询</a-button>
+                    <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
                     <a-button style="margin:0 10px;" type="primary">打印</a-button>
                     <a-button>导出</a-button> 
                 </div>
@@ -43,7 +48,8 @@
             <!-- 按岗位 -->
             <a-tab-pane class="page" tab="按岗位" :key="2">
                 <div class="buttons">
-                    <a-button>查询</a-button>
+                    <a-button @click="searchSwitch=true">查询</a-button>
+                    <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
                     <a-button style="margin:0 10px;" type="primary">打印</a-button>
                     <a-button>导出</a-button> 
                 </div>
@@ -85,7 +91,8 @@
             <!-- 按工种 -->
             <a-tab-pane class="page" tab="按工种" :key="3">
                 <div class="buttons">
-                    <a-button>查询</a-button>
+                    <a-button @click="searchSwitch=true">查询</a-button>
+                    <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
                     <a-button style="margin:0 10px;" type="primary">打印</a-button>
                     <a-button>导出</a-button> 
                 </div>
@@ -125,13 +132,65 @@
                 <a-pagination showQuickJumper class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
             </a-tab-pane>
         </a-tabs>
+        <!-- 查询界面 -->
+        <div v-if="searchSwitch" class="searchBlock">
+            <div class="bac" @click="searchSwitch=false"></div>
+            <div class="cont">
+                <div class="selects">
+                    <span>项目状态：</span>
+                    <div>
+                        <a-select style="width:100%;" :defaultValue='show_searchData.projectStatus' @change="selectProjectStatus">
+                            <a-select-option value="1">筹备</a-select-option>
+                            <a-select-option value="3">在建</a-select-option>      
+                            <a-select-option value="4">完工</a-select-option>                 
+                            <a-select-option value="5">停工</a-select-option>                 
+                        </a-select>      
+                    </div>  
+                </div>  
+                <div class="selects">
+                    <span>项目名称：</span>
+                    <div>
+                        <a-select style="width:100%;" :defaultValue='show_searchData.projectName' @change="selectProjectName">
+                            <a-select-option :value="item.projectId" v-for='(item,index) in projectList' :key="'pro'+index">{{item.projectName}}</a-select-option> 
+                        </a-select>      
+                    </div> 
+                </div>  
+                <div class="selects">
+                    <span>建设单位：</span>
+                    <div>
+                        <input style="width:100%" v-model="show_searchData.buildingSide" type="text">    
+                    </div> 
+                </div>
+                <div class="selects">
+                    <span>监理单位：</span>
+                    <div>
+                        <input style="width:100%" v-model="show_searchData.supervisionUnit" type="text">    
+                    </div> 
+                </div>
+                <div class="selects">
+                    <span>施工单位：</span>
+                    <div>
+                        <input style="width:100%" v-model="show_searchData.constructionUnit" type="text">    
+                    </div> 
+                </div>
+                <div class="buttons">
+                    <a-button  @click="searchSwitch=false">取消</a-button> 
+                    <a-button type="primary" @click="submitSearch()">查询</a-button>
+                </div>
+            </div>    
+        </div> 
     </div>
 </template>
 <script>
 import {projectStatus,technicalTypes} from '../../../../utils/dataDictionary.js'
+import {pullProjectLists} from '../../../../utils/pubFunc.js'
 export default {
     data(){
         return{
+            // 判断是否在查询
+            isSearch:false,
+            // 查询界面开关
+            searchSwitch:false,
             // 标签页类型
             type:1,
             pageNum:1,
@@ -261,17 +320,59 @@ export default {
                 align: 'center',
                 dataIndex:"totalNum",  
             }],
-            list:[]
-        }
-    },
-    watch:{
-        'type':function(n,o){
-            this.pageNum=1;
-            this.getRealName();
+            list:[],
+            // 查询用数据
+            searchData:{
+                projectStatus:'',
+                projectName:'',
+                buildingSide:'',
+                supervisionUnit:'',
+                constructionUnit:''
+            },
+            show_searchData:{
+                projectStatus:'',
+                projectName:'',
+                buildingSide:'',
+                supervisionUnit:'',
+                constructionUnit:''
+            },
+            // 项目列表
+            projectList:[]
         }
     },
     mounted(){
         this.getRealName();
+    },
+    watch:{
+        'type':function(n,o){
+            // 标签页切换都需要关闭查询
+            this.isSearch=false;
+            this.pageNum=1;
+            this.getRealName();
+        },
+        "searchSwitch":function(n,o){
+            if(n){
+                // 拉取项目列表
+                pullProjectLists(this).then((res)=>{
+                    this.projectList=res
+                })
+            }else{
+                this.show_searchData={
+                    projectStatus:'',
+                    projectName:'',
+                    buildingSide:'',
+                    supervisionUnit:'',
+                    constructionUnit:''
+                }
+                this.searchData={
+                    projectStatus:'',
+                    projectName:'',
+                    buildingSide:'',
+                    supervisionUnit:'',
+                    constructionUnit:''
+                }
+            }
+        }
     },
     methods:{
         // 获取实名制管理报表
@@ -315,10 +416,61 @@ export default {
         // 翻页
         preNextPage(){
             this.pageNum=e
+            // 判断是查询翻页还是普通翻页
+            if(this.isSearch){
+                this.submitSearch();
+            }else{
+                this.getRealName();
+            }
         },
         //岗位数组字典
         gangWei(num){
             return technicalTypes(num)
+        },
+        // 查询项目状态选择
+        selectProjectStatus(e){
+            this.show_searchData.projectStatus=e
+        },
+        // 查询项目名称选择
+        selectProjectName(e){
+            this.show_searchData.projectName=e
+        },
+        // 提交查询
+        submitSearch(){
+            // if(!this.show_searchData.projectStatus){
+            //     this.$message.warning('请选择项目状态')
+            // }else if(!this.show_searchData.projectName){
+            //     this.$message.warning('请选择项目名称')
+            // }else if(!this.show_searchData.buildingSide){
+            //     this.$message.warning('请输入建设单位')
+            // }else if(!this.show_searchData.supervisionUnit){
+            //     this.$message.warning('请输入监理单位')
+            // }else if(!this.show_searchData.constructionUnit){
+            //     this.$message.warning('请输入施工单位')
+            // }else{
+                // 如果查询时关闭状态下查询 清空页面参数
+                if(!this.isSearch){
+                    this.pageNum=1;
+                }
+                this.searchData=JSON.parse(JSON.stringify(this.show_searchData))
+                this.$axios.post('/t_dz_person/selectPersonReport',{
+                    pageNum:this.pageNum,
+                    pageSize:this.pageSize,
+                    ...this.searchData
+                }).then((res)=>{
+                    this.list=res.data
+                    this.total=res.count
+                    // 打开查询
+                    this.isSearch=true;
+                    this.searchSwitch=false
+                })
+            // }           
+        },
+        reRequst(){
+            this.pageNum=1;
+            // 关闭查询
+            this.isSearch=false;
+            this.getRealName();
         }
     }
 }
@@ -327,6 +479,7 @@ export default {
     .realName{
         height: 100%;
         overflow-y: scroll;
+        position: relative;
         .page{
             padding: 10px;
             .buttons{
@@ -343,6 +496,58 @@ export default {
         }
         .status:nth-of-type(2){
             margin: 5px 0;
+        }
+        .searchBlock{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.5);
+            left: 0;
+            top: 0;
+            z-index: 99;
+            .bac{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                background: rgba(0, 0, 0, 0.5);
+            }
+            .cont{
+                background: #fff;
+                position: absolute;
+                width: 40%;
+                left: 50%;
+                top: 20%;
+                transform: translateX(-50%) ;
+                box-sizing: border-box;
+                padding:20px 40px;
+                border-radius: 4px;
+                .selects{
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    span{
+                        width: 30%;
+                    }
+                    div{
+                        width: 70%;
+                        input{
+                            border: 1px solid #d9d9d9;
+                            height: 30px;
+                            box-sizing: border-box;
+                            border-radius: 4px;
+                            padding: 11px;
+                        }
+                    }
+                }
+                .buttons{
+                    margin: 0 auto;
+                    width: 60%;
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
         }
     }
     .pagination{

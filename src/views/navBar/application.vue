@@ -23,8 +23,8 @@
                         <div slot="title">项目报表</div>
                         <a-menu-item key='7' v-if='JSON.stringify(funcList.projectBlock.person)!="{}"'><router-link :to='{name:"realNameReport"}'>实名制管理报表</router-link></a-menu-item>
                         <a-menu-item key='8' v-if='JSON.stringify(funcList.projectBlock.salary)!="{}"'>民工薪资专户</a-menu-item>
-                        <a-menu-item key='9' v-if='JSON.stringify(funcList.projectBlock.supervisorReport)!="{}"'>监理报告</a-menu-item>
-                        <a-menu-item key='10' v-if='JSON.stringify(funcList.projectBlock.devices)!="{}"'>设备统计</a-menu-item>
+                        <a-menu-item key='9' v-if='JSON.stringify(funcList.projectBlock.supervisorReport)!="{}"'>监理报告</a-menu-item>     
+                        <a-menu-item key='10' v-if='JSON.stringify(funcList.projectBlock.devices)!="{}"'><router-link :to='{name:"equipmentStatistics"}'>设备统计</router-link></a-menu-item>
                         <a-menu-item key='11' v-if='JSON.stringify(funcList.projectBlock.dataReport)!="{}"'>数据报告</a-menu-item>
                         <a-menu-item key='12' v-if='JSON.stringify(funcList.projectBlock.sign)!="{}"'>考勤数据</a-menu-item>
                     </a-sub-menu>
