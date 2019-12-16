@@ -65,3 +65,10 @@
 .equipmentStatistics .table1 .ant-table-tbody .ant-table-row td:nth-of-type(6){ 
     width:10%;
 }
+/* 监理报告 表格 标题 */
+.supervisionReport .table2 .ant-table-tbody .ant-table-row td:nth-of-type(9){ 
+    width:15%;
+}
+.supervisionReport .table1 .ant-table-tbody .ant-table-row td:nth-of-type(6),.supervisionReport .table2 .ant-table-tbody .ant-table-row td:nth-of-type(6){ 
+    width:10%;
+}

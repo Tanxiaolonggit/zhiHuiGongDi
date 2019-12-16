@@ -1,12 +1,12 @@
 <template>
-    <div class="realName">
+    <div class="supervisionReport">
         <a-breadcrumb>
             <a-breadcrumb-item>项目报表</a-breadcrumb-item>
-            <a-breadcrumb-item>实名制管理报表</a-breadcrumb-item>
+            <a-breadcrumb-item>监理报告</a-breadcrumb-item>
         </a-breadcrumb>
         <a-tabs :defaultActiveKey="type" @change="pageChage">
-            <!-- 按类别 -->
-            <a-tab-pane class="page" tab="按类别" :key="1">
+            <!-- 监理报告统计 -->
+            <a-tab-pane class="page" tab="监理报告统计" :key="1">
                 <div class="buttons">
                     <a-button @click="searchSwitch=true">查询</a-button>
                     <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
@@ -38,15 +38,15 @@
                         <span>{{(index+1)}}</span>
                     </template>
                     <template  slot="status" slot-scope="text,record">
-                        <span class="status" :style="{background:record.status.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.status.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.status.projectStatus)}}</span>
-                        <span class="status" v-if='record.status.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
-                        <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.status.demoProject==1?'示范':'非示范'}}</span>
+                        <span class="status" :style="{background:record.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.projectStatus)}}</span>
+                        <span class="status" v-if='record.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
+                        <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.demoProject==1?'示范':'非示范'}}</span>
                     </template>
                 </a-table>
                 <a-pagination showQuickJumper class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" /> 
             </a-tab-pane>
-            <!-- 按岗位 -->
-            <a-tab-pane class="page" tab="按岗位" :key="2">
+            <!-- 监理报告明细 -->
+            <a-tab-pane class="page" tab="监理报告明细" :key="2">
                 <div class="buttons">
                     <a-button @click="searchSwitch=true">查询</a-button>
                     <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
@@ -78,56 +78,38 @@
                         <span>{{(index+1)}}</span>
                     </template>
                     <template  slot="status" slot-scope="text,record">
-                        <span class="status" :style="{background:record.status.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.status.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.status.projectStatus)}}</span>
-                        <span class="status" v-if='record.status.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
-                        <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.status.demoProject==1?'示范':'非示范'}}</span>
+                        <span class="status" :style="{background:record.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.projectStatus)}}</span>
+                        <span class="status" v-if='record.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
+                        <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.demoProject==1?'示范':'非示范'}}</span>
                     </template>
                     <template  slot="position" slot-scope="text,record">
                         <div v-for="(value,key,index) in record.position" :key='"poi"+index'>{{key+':'+value}}</div>
                     </template>
-                </a-table>
-                <a-pagination showQuickJumper class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
-            </a-tab-pane>
-            <!-- 按工种 -->
-            <a-tab-pane class="page" tab="按工种" :key="3">
-                <div class="buttons">
-                    <a-button @click="searchSwitch=true">查询</a-button>
-                    <a-button style="margin-left:10px;" @click="reRequst()">刷新</a-button>
-                    <a-button style="margin:0 10px;" type="primary">打印</a-button>
-                    <a-button>导出</a-button> 
-                </div>
-                <a-table class="table2" :columns="columns3" :dataSource="list" :pagination='false'  bordered>   
-                    <template slot="projectName"  slot-scope="text">
-                        <a-tooltip  placement="right" :title="text">
+                    <template  slot="posprojectStatusition" slot-scope="text">
+                        <a-tooltip  placement="left" :title="text==0?'专报':'急报'">
+                            <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text==0?'专报':'急报'}}</div>
+                        </a-tooltip> 
+                    </template>
+                    <template slot="reportDate"  slot-scope="text">
+                        <a-tooltip  placement="left" :title="text">
                             <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
                         </a-tooltip>   
                     </template>
-                    <template slot="buildingSide"  slot-scope="text">
-                        <a-tooltip  placement="right" :title="text">
+                    <template slot="reportTitle"  slot-scope="text">
+                        <a-tooltip  placement="left" :title="text">
                             <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
                         </a-tooltip>   
                     </template>
-                    <template slot="supervisionUnit"  slot-scope="text">
-                        <a-tooltip  placement="right" :title="text">
+                    <template slot="chiefSupervisor"  slot-scope="text">
+                        <a-tooltip  placement="left" :title="text">
                             <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
                         </a-tooltip>   
                     </template>
-                    <template slot="constructionUnit"  slot-scope="text">
-                        <a-tooltip  placement="right" :title="text">
+                    <template slot="reportAuthor"  slot-scope="text">
+                        <a-tooltip  placement="left" :title="text">
                             <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
                         </a-tooltip>   
-                    </template>
-                    <template slot="num" slot-scope="text,record,index">
-                        <span>{{(index+1)}}</span>
-                    </template>
-                    <template  slot="status" slot-scope="text,record">
-                        <span class="status" :style="{background:record.status.projectStatus==1?'#edf7f1':'#f8f2f1',color:record.status.projectStatus==1?'#1bd177':'#f6485c'}">{{statuss(record.status.projectStatus)}}</span>
-                        <span class="status" v-if='record.status.wisdomProject' style="color:#1890ff;background:#e6f7ff">智慧工程</span>
-                        <span class="status" style="color:#fa8c16;background:#fff7e6;">{{record.status.demoProject==1?'示范':'非示范'}}</span>
-                    </template>
-                    <template  slot="technicalType" slot-scope="text,record">
-                        <div v-for="(value,key,index) in record.technicalType" :key='"poi"+index'>{{gangWei(key)+':'+value}}</div>
-                    </template>
+                    </template>    
                 </a-table>
                 <a-pagination showQuickJumper class="pagination" @change='preNextPage' :defaultCurrent="pageNum" :defaultPageSize="pageSize" :total="total" />
             </a-tab-pane>
@@ -182,7 +164,7 @@
     </div>
 </template>
 <script>
-import {projectStatus,technicalTypes} from '../../../../utils/dataDictionary.js'
+import {projectStatus} from '../../../../utils/dataDictionary.js'
 import {pullProjectLists} from '../../../../utils/pubFunc.js'
 export default {
     data(){
@@ -226,19 +208,15 @@ export default {
                 dataIndex:"status",
                 scopedSlots: { customRender: 'status' },
             },{
-                title:"建设单位人数",
+                title:"专报",
                 align: 'center',
-                dataIndex:"buildingSideNum",
+                dataIndex:"zhuanBaoNum",
             },{
-                title:"施工单位人数",
+                title:"急报",
                 align: 'center',
-                dataIndex:"constructionUnitNum",  
+                dataIndex:"jiBaoNum",  
             },{
-                title:"作业人数",
-                align: 'center',
-                dataIndex:"workerNum",  
-            },{
-                title:"总人数",
+                title:"合计",
                 align: 'center',
                 dataIndex:"totalNum",  
             }],
@@ -272,53 +250,30 @@ export default {
                 dataIndex:"status",
                 scopedSlots: { customRender: 'status' },
             },{
-                title:'岗位及人数',
+                title:'类型',
                 align: 'center',
-                dataIndex:"position", 
-                scopedSlots: { customRender: 'position' },
+                dataIndex:"posprojectStatusition", 
+                scopedSlots: { customRender: 'posprojectStatusition' },
             },{
-                title:"总人数",
+                title:"报告日期",
                 align: 'center',
-                dataIndex:"totalNum",  
-            }],
-            columns3: [{
-                title: '序号',
-                align: 'center',
-                scopedSlots: { customRender: 'num' },  
+                dataIndex:"reportDate",  
+                scopedSlots: { customRender: 'reportDate' },
             },{
-                title: '项目名称',
+                title:"标题",
                 align: 'center',
-                dataIndex: 'projectName',
-                scopedSlots: { customRender: 'projectName' },  
+                dataIndex:"reportTitle",  
+                scopedSlots: { customRender: 'reportTitle' },
             },{
-                title: '建设单位',
+                title:"监理人",
                 align: 'center',
-                dataIndex: 'buildingSide',
-                scopedSlots: { customRender: 'buildingSide' },  
+                dataIndex:"chiefSupervisor",  
+                scopedSlots: { customRender: 'chiefSupervisor' },
             },{
-                title: '监理单位',
+                title:"报告人",
                 align: 'center',
-                dataIndex: 'supervisionUnit',
-                scopedSlots: { customRender: 'supervisionUnit' },  
-            },{
-                title:'施工单位',
-                align: 'center',
-                dataIndex:"constructionUnit",
-                scopedSlots: { customRender: 'constructionUnit' },  
-            },{
-                title:'状态',
-                align: 'center',
-                dataIndex:"status",
-                scopedSlots: { customRender: 'status' },
-            },{
-                title:'岗位及人数',
-                align: 'center',
-                dataIndex:"technicalType", 
-                scopedSlots: { customRender: 'technicalType' },
-            },{
-                title:"总人数",
-                align: 'center',
-                dataIndex:"totalNum",  
+                dataIndex:"reportAuthor",  
+                scopedSlots: { customRender: 'reportAuthor' },
             }],
             list:[],
             // 查询用数据
@@ -341,14 +296,14 @@ export default {
         }
     },
     mounted(){
-        this.getRealName();
+        this.getReports();
     },
     watch:{
         'type':function(n,o){
             // 标签页切换都需要关闭查询
             this.isSearch=false;
             this.pageNum=1;
-            this.getRealName();
+            this.getReports();
         },
         "searchSwitch":function(n,o){
             if(n){
@@ -375,32 +330,23 @@ export default {
         }
     },
     methods:{
-        // 获取实名制管理报表
-        getRealName(){
+        // 获取监理报告列表
+        getReports(){
             let url;
             switch(this.type){
                 case 1:
-                    url='/t_dz_person/selectPersonReportByClass'
+                    url='/t_dz_supervisorreport/selectSupervisorReportStatistics'
                     break;
                 case 2:
-                    url='/t_dz_person/selectPersonReportByPosition'
-                    break;
-                case 3:
-                    url='/t_dz_person/selectPersonReportByTecType'
+                    url='/t_dz_supervisorreport/selectSupervisorReport'
                     break;
             }
             this.$axios.post(url,{
                 pageNum:this.pageNum,
-                pageSize:this.pageSize
+                pageSize:this.pageSize,
+                ...this.searchData
             }).then((res)=>{
-                res.data.forEach((item)=>{
-                    item.status=JSON.parse(item.status)
-                    if(this.type==2){
-                        item.position=JSON.parse(item.position)
-                    }else if(this.type==3){
-                        item.technicalType=JSON.parse(item.technicalType)
-                    }
-                })
+                this.searchSwitch=false;
                 this.list=res.data
                 this.total=res.count
             })
@@ -417,15 +363,7 @@ export default {
         preNextPage(){
             this.pageNum=e
             // 判断是查询翻页还是普通翻页
-            if(this.isSearch){
-                this.submitSearch();
-            }else{
-                this.getRealName();
-            }
-        },
-        //岗位数组字典
-        gangWei(num){
-            return technicalTypes(num)
+            this.getReports();
         },
         // 查询项目状态选择
         selectProjectStatus(e){
@@ -453,30 +391,20 @@ export default {
                     this.pageNum=1;
                 }
                 this.searchData=JSON.parse(JSON.stringify(this.show_searchData))
-                this.$axios.post('/t_dz_person/selectPersonReport',{
-                    pageNum:this.pageNum,
-                    pageSize:this.pageSize,
-                    ...this.searchData
-                }).then((res)=>{
-                    this.list=res.data
-                    this.total=res.count
-                    // 打开查询
-                    this.isSearch=true;
-                    this.searchSwitch=false
-                })
+                this.getReports();
             // }           
         },
         reRequst(){
             this.pageNum=1;
             // 关闭查询
             this.isSearch=false;
-            this.getRealName();
+            this.getReports();
         }
     }
 }
 </script>
 <style lang="less" scoped>
-    .realName{
+    .supervisionReport{
         height: 100%;
         overflow-y: scroll;
         position: relative;

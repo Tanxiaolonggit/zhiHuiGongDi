@@ -107,6 +107,12 @@ export default new Router({
               name:'realNameReport',
               component: resolve => require(['./components/application/pages/projectReport/realNameReport'], resolve)
             },
+            // 监理报告realNameReport
+            {
+              path: "/webContent/application/supervisionReport",
+              name:'supervisionReport',
+              component: resolve => require(['./components/application/pages/projectReport/supervisionReport'], resolve)
+            },
             // 设备统计报表equipmentStatistics
             {
               path: "/webContent/application/equipmentStatistics",
