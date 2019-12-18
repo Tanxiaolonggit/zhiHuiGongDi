@@ -173,7 +173,6 @@ export default {
         },
         // 按工号选择时间
         gonghaoDate(e){
-            console.log(e)
             if(e.length==2){
                 this.searchData.signTimeBegin=serverTimestamp(e[0]._d)
                 this.searchData.signTimeEnd=serverTimestamp(e[1]._d)
@@ -202,7 +201,6 @@ export default {
                 this.total=res.count
                 this.searchtype=0
                 this.listisshow=true
-                console.log(res)
             })
         },
         // 按工号查找
@@ -222,7 +220,8 @@ export default {
             })
         },
         // 下一页
-        preNextPage(){
+        preNextPage(e){
+            this.pageNum=e
             if(this.searchtype==0){
                 this.typeSearch();
             }else if(this.searchtype==1){

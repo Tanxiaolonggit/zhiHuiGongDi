@@ -360,7 +360,7 @@ export default {
             this.type=e
         },
         // 翻页
-        preNextPage(){
+        preNextPage(e){
             this.pageNum=e
             // 判断是查询翻页还是普通翻页
             this.getReports();

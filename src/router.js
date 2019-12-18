@@ -119,6 +119,12 @@ export default new Router({
               name:'equipmentStatistics',
               component: resolve => require(['./components/application/pages/projectReport/equipmentStatistics'], resolve)
             },
+            // 民工薪资专户 payrollReport
+            {
+              path: "/webContent/application/payrollReport",
+              name:'payrollReport',
+              component: resolve => require(['./components/application/pages/projectReport/payrollReport'], resolve)
+            }
           ]
         },
 

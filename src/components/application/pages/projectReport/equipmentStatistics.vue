@@ -256,7 +256,7 @@ export default {
       return projectStatus(num);
     },
     // 翻页
-    preNextPage() {
+    preNextPage(e) {
       this.pageNum = e;
       this.DeviceStatistics()
     },

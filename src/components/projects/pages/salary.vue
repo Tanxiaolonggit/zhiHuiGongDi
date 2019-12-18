@@ -68,23 +68,23 @@ export default {
             columns1: [{
                 title: '#',
                 align: 'center',
-                dataIndex: 'salarytotal',
+                dataIndex: 'accountId',
             },{
-                title: '月度',
+                title: '日期',
                 align: 'center',
-                dataIndex: 'salarymonth',
+                dataIndex: 'transTime',
             }, {
                 title: '账户号',
                 align: 'center',
-                dataIndex: 'salarySelfAccount',
+                dataIndex: 'receiverAccount',
             }, {
                 title: '对方账户名称',
                 align: 'center',
-                dataIndex: 'payRollBankName',
+                dataIndex: 'receiverName',
             },{
                 title: '交易金额',
                 align: 'center',
-                dataIndex: 'salary',
+                dataIndex: 'transAmount',
             },{
                 title:"交易类型",
                 align: 'center',

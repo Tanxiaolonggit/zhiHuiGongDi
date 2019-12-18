@@ -345,8 +345,6 @@ export default {
     },
     watch:{
         'type':function(n,o){
-            // 标签页切换都需要关闭查询
-            this.isSearch=false;
             this.pageNum=1;
             this.getRealName();
         },
@@ -391,7 +389,8 @@ export default {
             }
             this.$axios.post(url,{
                 pageNum:this.pageNum,
-                pageSize:this.pageSize
+                pageSize:this.pageSize,
+                ...this.searchData
             }).then((res)=>{
                 res.data.forEach((item)=>{
                     item.status=JSON.parse(item.status)
@@ -403,6 +402,7 @@ export default {
                 })
                 this.list=res.data
                 this.total=res.count
+                this.searchSwitch=false
             })
         },
         //项目状态字典
@@ -414,14 +414,9 @@ export default {
             this.type=e
         },
         // 翻页
-        preNextPage(){
+        preNextPage(e){
             this.pageNum=e
-            // 判断是查询翻页还是普通翻页
-            if(this.isSearch){
-                this.submitSearch();
-            }else{
-                this.getRealName();
-            }
+            this.getRealName();
         },
         //岗位数组字典
         gangWei(num){
@@ -448,28 +443,22 @@ export default {
             // }else if(!this.show_searchData.constructionUnit){
             //     this.$message.warning('请输入施工单位')
             // }else{
-                // 如果查询时关闭状态下查询 清空页面参数
-                if(!this.isSearch){
-                    this.pageNum=1;
-                }
+                this.pageNum=1;
                 this.searchData=JSON.parse(JSON.stringify(this.show_searchData))
-                this.$axios.post('/t_dz_person/selectPersonReport',{
-                    pageNum:this.pageNum,
-                    pageSize:this.pageSize,
-                    ...this.searchData
-                }).then((res)=>{
-                    this.list=res.data
-                    this.total=res.count
-                    // 打开查询
-                    this.isSearch=true;
-                    this.searchSwitch=false
-                })
+                this.getRealName();
+                this.searchSwitch=false
             // }           
         },
         reRequst(){
             this.pageNum=1;
             // 关闭查询
-            this.isSearch=false;
+            this.searchData={
+                projectStatus:'',
+                projectName:'',
+                buildingSide:'',
+                supervisionUnit:'',
+                constructionUnit:''
+            }
             this.getRealName();
         }
     }
