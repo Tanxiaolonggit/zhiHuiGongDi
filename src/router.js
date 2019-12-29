@@ -123,8 +123,14 @@ export default new Router({
             {
               path: "/webContent/application/payrollReport",
               name:'payrollReport',
-              component: resolve => require(['./components/application/pages/projectReport/payrollReport'], resolve)
-            }
+              component: resolve => require(['./components/application/pages/projectReport/payrollReport'], resolve) 
+            },
+            // 数据报告 dataReport
+            {
+              path: "/webContent/application/dataReport",
+              name:'dataReport',
+              component: resolve => require(['./components/application/pages/projectReport/dataReport'], resolve) 
+            },
           ]
         },
 

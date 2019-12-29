@@ -319,13 +319,6 @@ export default {
                     supervisionUnit:'',
                     constructionUnit:''
                 }
-                this.searchData={
-                    projectStatus:'',
-                    projectName:'',
-                    buildingSide:'',
-                    supervisionUnit:'',
-                    constructionUnit:''
-                }
             }
         }
     },
@@ -398,6 +391,13 @@ export default {
             this.pageNum=1;
             // 关闭查询
             this.isSearch=false;
+            this.searchData={
+                projectStatus:'',
+                projectName:'',
+                buildingSide:'',
+                supervisionUnit:'',
+                constructionUnit:''
+            }
             this.getReports();
         }
     }

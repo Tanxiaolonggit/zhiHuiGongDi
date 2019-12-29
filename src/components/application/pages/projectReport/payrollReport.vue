@@ -18,7 +18,7 @@
                         <span>{{(index+1)}}</span>
                     </template> 
                     <template slot="xiangqing" slot-scope="text,record,index">
-                        <a>详情</a>
+                        <a @click="getDetail(record,1)">详情</a>
                     </template> 
                     <template slot="salaryBank"  slot-scope="text">
                         <a-tooltip  placement="right" :title="text">
@@ -66,7 +66,7 @@
                         <span>{{(index+1)}}</span>
                     </template> 
                     <template slot="xiangqing" slot-scope="text,record,index">
-                        <a>详情</a>
+                        <a @click="getDetail(record,2)">详情</a>
                     </template> 
                     <template slot="salaryBank"  slot-scope="text">
                         <a-tooltip  placement="right" :title="text">
@@ -229,6 +229,87 @@
                 </div>
             </div>
         </div> 
+        <div v-if="detail" class="searchBlock">
+            <div class="bac" @click="detail=false"></div>
+            <div class="cont2" >
+                <div v-if="type==1" >
+                    <a-table :loading='isLoading2'  :columns="columns4" :dataSource="list2" :pagination='false'  bordered>
+                        <template slot="num" slot-scope="text,record,index">
+                            <span>{{(index+1)}}</span>
+                        </template> 
+                        <template slot="transTime"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="salaryAccountName"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="salaryCompanyAccount"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template>  
+                        <template slot="receiverAccount"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="transType"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text==0?'收入':'支出'}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="transAmount"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="transBalance"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                        <template slot="remark"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                    </a-table>
+                    <a-pagination showQuickJumper class="pagination" @change='preNextPage2' :defaultCurrent="pageNum2" :defaultPageSize="pageSize2" :total="total2" />
+                </div>
+                <div  v-else-if="type==2">
+                    <a-table :loading='isLoading2'  :columns="columns5" :dataSource="list2" :pagination='false'  bordered>
+                        <template slot="num" slot-scope="text,record,index">
+                            <span>{{(index+1)}}</span>
+                        </template> 
+                        <template slot="salaryOutTime"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template>  
+                        <template slot="name"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template>  
+                        <template slot="salarySelfAccount"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template>  
+                        <template slot="totalPayAmount"  slot-scope="text">
+                            <a-tooltip  placement="right" :title="text">
+                                <div style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{text}}</div>
+                            </a-tooltip>   
+                        </template> 
+                    </a-table>
+                    <a-pagination showQuickJumper class="pagination" @change='preNextPage2' :defaultCurrent="pageNum2" :defaultPageSize="pageSize2" :total="total2" />
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -236,9 +317,14 @@ import {serverTimestamp} from '../../../../utils/util_one.js'
 import {pullProjectLists} from '../../../../utils/pubFunc.js'
 export default {
     data(){
+        const that=this
         return{
+            // 详情是否展示
+            detail:false,
             // 是否加载中
             isLoading:false,
+            // 详情是否显示i加载中
+            isLoading2:false,
             // 判断是否在查询
             isSearch:false,
             // 查询界面开关
@@ -333,7 +419,7 @@ export default {
                     scopedSlots: { customRender: 'count' }, 
                 },
                 {
-                    title: '详情',
+                    title: '发放流水',
                     align: 'center',
                     scopedSlots: { customRender: 'xiangqing' }, 
                 }
@@ -420,7 +506,102 @@ export default {
                 constructionUnit:''
             },
             // 项目列表
-            projectList:[]
+            projectList:[],
+            // 详情页
+            pageNum2:1,
+            pageSize2:10,
+            total2:0,
+            list2:[],
+            // 用于查找的地址
+            urls:null,
+            // 用于查找的详情数据
+            detailData:null,
+            columns4:[
+                {
+                    title: '序号',
+                    align: 'center',
+                    scopedSlots: { customRender: 'num' },  
+                },
+                {
+                    title:'业务日期',
+                    align:'center',
+                    dataIndex: 'transTime',
+                    scopedSlots: { customRender: 'transTime' }, 
+                },
+                {
+                    title:'账户名称',
+                    align:'center',
+                    dataIndex: 'salaryAccountName',
+                    scopedSlots: { customRender: 'salaryAccountName' }, 
+                },
+                {
+                    title:'账户编码',
+                    align:'center',
+                    dataIndex: 'salaryCompanyAccount',
+                    scopedSlots: { customRender: 'salaryCompanyAccount' }, 
+                },
+                {
+                    title:'对方账户',
+                    align:'center',
+                    dataIndex: 'receiverAccount',
+                    scopedSlots: { customRender: 'receiverAccount' }, 
+                },
+                {
+                    title:'交易类型',
+                    align:'center',
+                    dataIndex: 'transType',
+                    scopedSlots: { customRender: 'transType' }, 
+                },
+                {
+                    title:'交易金额',
+                    align:'center',
+                    dataIndex: 'transAmount',
+                    scopedSlots: { customRender: 'transAmount' }, 
+                },
+                {
+                    title:'交易余额',
+                    align:'center',
+                    dataIndex: 'transBalance',
+                    scopedSlots: { customRender: 'transBalance' }, 
+                },
+                {
+                    title:'附言',
+                    align:'center',
+                    dataIndex: 'remark',
+                    scopedSlots: { customRender: 'remark' }, 
+                }
+            ],
+            "columns5":[
+                 {
+                    title: '序号',
+                    align: 'center',
+                    scopedSlots: { customRender: 'num' },  
+                },
+                {
+                    title:'业务日期',
+                    align:'center',
+                    dataIndex: 'salaryOutTime',
+                    scopedSlots: { customRender: 'salaryOutTime' }, 
+                },
+                {
+                    title:'姓名',
+                    align:'center',
+                    dataIndex: 'name',
+                    scopedSlots: { customRender: 'name' }, 
+                },
+                {
+                    title:'账户编码',
+                    align:'center',
+                    dataIndex: 'salarySelfAccount',
+                    scopedSlots: { customRender: 'salarySelfAccount' }, 
+                },
+                {
+                    title:'金额',
+                    align:'center',
+                    dataIndex: 'totalPayAmount',
+                    scopedSlots: { customRender: 'totalPayAmount' }, 
+                },
+            ]
         }
     },
     mounted(){
@@ -442,6 +623,14 @@ export default {
                 }
             }else{
                 this.clearSeachData();
+            }
+        },
+        "detail":function(n,o){
+            if(!n){
+                this.pageNum2=1;
+                this.list2=[]
+                this.urls=null;
+                this.detailData=null
             }
         }
     },
@@ -489,6 +678,11 @@ export default {
             this.pageNum=e
             this.getSalaryList();
         },
+        preNextPage2(e){
+            this.pageNum2=e
+            console.log(this.pageNum2)
+            this.getDetail()
+        },
         // 查询项目名称选择
         selectProjectName(e){
             this.show_searchData3.projectName=e
@@ -526,6 +720,37 @@ export default {
                 this.show_searchData2.salaryOutTimeBegin=''
                 this.show_searchData2.salaryOutTimeEnd=''
             }
+        },
+        // 获取详情
+        getDetail(record,type){
+            this.detail=true
+            this.isLoading2=true
+            if(record && type && type==1){
+                this.urls='/t_dz_accountdetail/selectAccountDetail'
+                this.detailData={
+                    accountId:record.accountId,
+                    salaryBank:record.salaryBank,
+                    salaryCompanyAccount:record.salaryCompanyAccount,
+                    salaryAccountName:record.salaryAccountName
+                }
+            }else if(record && type && type==2){
+                this.urls='/t_dz_salary/selectSalary'
+                this.detailData={
+                    accountName:record.salaryAccountName,
+                    salaryOutTimeBegin:record.transTime,
+                    salaryOutTimeEnd:record.transTime,
+                    salaryCompanyAccount:record.salaryCompanyAccount,
+                }
+            }
+            this.$axios.post(this.urls,{
+                pageNum:this.pageNum2,
+                pageSize:this.pageSize2,
+                ...this.detailData
+            }).then((res)=>{
+                this.list2=res.data
+                this.total2=res.count
+                this.isLoading2=false
+            })
         },
         // 清楚查询数据
         clearSeachData(){
@@ -645,6 +870,17 @@ export default {
                     display: flex;
                     justify-content: space-between;
                 }
+            }
+            .cont2{
+                background: #fff;
+                position: absolute;
+                width:90%;
+                left: 50%;
+                top: 20%;
+                transform: translateX(-50%) ;
+                box-sizing: border-box;
+                padding:20px 40px;
+                border-radius: 4px;
             }
         }
     }

@@ -222,13 +222,6 @@ export default {
           supervisionUnit: "",
           constructionUnit: ""
         }
-        this.searchData = {
-          projectStatus: "",
-          projectName: "",
-          buildingSide: "",
-          supervisionUnit: "",
-          constructionUnit: ""
-        }
       }
     }
   },
@@ -252,7 +245,6 @@ export default {
     },
     //项目状态字典
     statuss(num) {
-        console.log(projectStatus(num))
       return projectStatus(num);
     },
     // 翻页
@@ -292,6 +284,13 @@ export default {
     },
     reRequst() {
       this.pageNum = 1;
+      this.searchData = {
+        projectStatus: "",
+        projectName: "",
+        buildingSide: "",
+        supervisionUnit: "",
+        constructionUnit: ""
+      }
       this.getDeviceStatistics();
     }
   }
@@ -344,22 +343,22 @@ export default {
         padding: 20px 40px;
         border-radius: 4px;
         .selects {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            span {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+          span {
             width:30%;
-            }
-            div {
+          }
+          div {
             width: 70%;
             input {
-                border: 1px solid #d9d9d9;
-                height: 30px;
-                box-sizing: border-box;
-                border-radius: 4px;
-                padding: 11px;
+              border: 1px solid #d9d9d9;
+              height: 30px;
+              box-sizing: border-box;
+              border-radius: 4px;
+              padding: 11px;
             }
-            }
+          }
         }
         .buttons {
             margin: 0 auto;
