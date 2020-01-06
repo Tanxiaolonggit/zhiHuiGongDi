@@ -131,6 +131,12 @@ export default new Router({
               name:'dataReport',
               component: resolve => require(['./components/application/pages/projectReport/dataReport'], resolve) 
             },
+            // 项目考勤
+            {
+              path: "/webContent/application/projectSign",
+              name:'projectSign',
+              component: resolve => require(['./components/application/pages/projectReport/projectSign'], resolve) 
+            },
           ]
         },
 

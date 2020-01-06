@@ -82,3 +82,18 @@
 .dataReport .ant-table-align-center div{
     white-space: pre-wrap;
 }
+/* 考勤报表表格样式 */
+.projectSign .tableDiv .tables th{
+    border: none;
+    background: #fff;
+}
+.projectSign .tableDiv .tables .ant-table-row td{
+    padding: 5px 10px!important;
+    border: none;
+}
+.projectSign .tableDiv .tables .ant-table-row td:nth-of-type(1){
+    width: 20%;
+}
+.projectSign .tableDiv .tables .ant-table-row:nth-of-type(2n-1){
+    background: #f9f9f9;
+}

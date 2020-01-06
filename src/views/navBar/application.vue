@@ -26,7 +26,7 @@
                         <a-menu-item key='9' v-if='JSON.stringify(funcList.projectBlock.supervisorReport)!="{}"'><router-link :to='{name:"supervisionReport"}'>监理报告</router-link></a-menu-item>     
                         <a-menu-item key='10' v-if='JSON.stringify(funcList.projectBlock.devices)!="{}"'><router-link :to='{name:"equipmentStatistics"}'>设备统计</router-link></a-menu-item>
                         <a-menu-item key='11' v-if='JSON.stringify(funcList.projectBlock.dataReport)!="{}"'><router-link :to='{name:"dataReport"}'>数据报告</router-link></a-menu-item>
-                        <a-menu-item key='12' v-if='JSON.stringify(funcList.projectBlock.sign)!="{}"'>考勤数据</a-menu-item>
+                        <a-menu-item key='12' v-if='JSON.stringify(funcList.projectBlock.sign)!="{}"'><router-link :to='{name:"projectSign"}'>考勤数据</router-link></a-menu-item>
                     </a-sub-menu>
                     <a-sub-menu key="sub3">
                         <div slot="title">监理管理</div>
